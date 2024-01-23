@@ -1,13 +1,16 @@
 
 import './App.css'
+import { AdrianKnight } from './components/Contributors'
 
 function App() {
 
   return (
     <>
-      <p className='underline'>Hello world</p>
+    <AdrianKnight/>
+    <AdrianKnight/>
     </>
-  )
-}
+    
+    )
+  }
 
 export default App
