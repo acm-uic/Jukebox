@@ -75,6 +75,7 @@ export const Manh = () => {
           </div>
         </div>
       </div>
+    </div>
     );
   };
 
