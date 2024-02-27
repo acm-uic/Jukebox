@@ -1,14 +1,20 @@
 import './App.css'
-import { AdrianKnight,OwenNeal,Andre,Manh } from './components/Contributors'
+import { Header } from './Header'
+import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from './components/Contributors'
+
 
 function App() {
 
   return (
     <>
-      <AdrianKnight/>
-      <OwenNeal/>
-      <Andre/>
-      <Manh/>
+      <Header/>
+      <div>
+        <AdrianKnight/>
+        <OwenNeal/>
+        <Andre/>
+        <Manh/>
+        <EthanKy />
+      </div>
     </>
     )
   }
