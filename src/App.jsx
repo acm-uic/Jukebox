@@ -1,7 +1,5 @@
-
 import './App.css'
-import { AdrianKnight } from './components/Contributors'
-import { OwenNeal } from './components/Contributors'
+import { AdrianKnight,OwenNeal,Andre } from './components/Contributors'
 
 function App() {
 
@@ -9,6 +7,7 @@ function App() {
     <>
       <AdrianKnight/>
       <OwenNeal/>
+      <Andre/>
     </>
     )
   }
