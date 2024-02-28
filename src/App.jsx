@@ -8,7 +8,6 @@ function App() {
   return (
     <>
       <VideoPlayer/>
-      <ReactPlayer url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'/>
       <AdrianKnight/>
       <OwenNeal/>
       <Andre/>
