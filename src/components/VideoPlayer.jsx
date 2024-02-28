@@ -13,7 +13,6 @@ export const VideoPlayer = () => {
     }
 
     return <>
-        <h1>Hi!</h1>
         <ReactPlayer url={playerUrl}/>
         <form onSubmit={handleSubmit}>
             <label> Enter a video URL:
