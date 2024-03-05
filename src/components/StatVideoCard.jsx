@@ -2,13 +2,18 @@ import React, { useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function StatVideoCard({video}) {
-    const {title, length, url} = video
-    const [showUrl, setShowUrl] = useState(false)
-    function handleClick(){
-      // Add what happens if the Queue button is pressed
-    }
-  
-    return (
+  //taking title as string, length as seconds, url as string
+  const {title, length, url} = video
+  const lengthString = new Date(length * 1000).toISOString().substring(14,19)
+
+  const [showUrl, setShowUrl] = useState(false)
+
+  function handleClick(){
+    // Add what happens if the Queue button is pressed
+
+  }
+
+  return (
     <div className='w-full h-[98px] bg-[#464545] flex justify-between items-center text-[#ffffff] py-2 px-3 rounded'>
       <div className='h-full flex flex-col gap-1'>
         <div className='text-5xl font-bold'>{title}</div>
@@ -24,7 +29,7 @@ export default function StatVideoCard({video}) {
         </div>
       </div>
       <div className="h-full flex flex-col items-end justify-between">
-        <div className='text-sm font-bold h-1/4'>{`LENGTH: ${length}`}</div>
+        <div className='text-sm font-bold h-1/4'>{`LENGTH: ${lengthString}`}</div>
         <button onClick={handleClick} className='text-2xl font-bold h-3/4 active:scale-90 active:text-gray-500 transition duration-100 ease-in-out'>ADD TO QUEUE</button>
       </div>
     </div>
