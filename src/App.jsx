@@ -1,21 +1,23 @@
-
+import ReactPlayer from 'react-player'
 import './App.css'
-import { AdrianKnight } from './components/Contributors'
-import { OwenNeal } from './components/Contributors'
-import StatVideoCard from './components/StatVideoCard'
+import { Header } from './Header'
+import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from './components/Contributors'
+
+import { VideoPlayer } from './components/VideoPlayer'
 
 function App() {
-  const video = {
-    title: 'Title',
-    length: '3:87',
-    url:'https://www.youtube.com/'
-  }
   
   return (
     <>
-      <AdrianKnight/>
-      <OwenNeal/>
-      <StatVideoCard video={video}/>
+      <Header/>
+      <VideoPlayer/>
+      <div>
+        <AdrianKnight/>
+        <OwenNeal/>
+        <Andre/>
+        <Manh/>
+        <EthanKy />
+      </div>
     </>
     )
   }
