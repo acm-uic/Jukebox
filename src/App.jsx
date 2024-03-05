@@ -7,8 +7,10 @@ import StatVideoCard from './components/StatVideoCard'
 function App() {
   const video = {
     title: 'Title',
-    length: '387'
+    length: '3:87',
+    url:'https://www.youtube.com/'
   }
+  
   return (
     <>
       <AdrianKnight/>
