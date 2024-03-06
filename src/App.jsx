@@ -4,13 +4,20 @@ import { Header } from './Header'
 import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from './components/Contributors'
 
 import { VideoPlayer } from './components/VideoPlayer'
-import StatsPage from './pages/StatsPage'
 
 function App() {
 
   return (
     <>
-      <StatsPage />
+      <Header/>
+      <VideoPlayer/>
+      <div>
+        <AdrianKnight/>
+        <OwenNeal/>
+        <Andre/>
+        <Manh/>
+        <EthanKy />
+      </div>
     </>
     )
   }
