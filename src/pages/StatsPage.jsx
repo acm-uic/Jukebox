@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 export default function StatsPage() {
-    //using plays as int, likes as int, and recency as an int (lowest means more recent)
-    const videoList = [{title:'comcast', plays:8888888, likes:45324, recency:2}, {title:'verizon', plays:1321, likes:214, recency:0}, {title:'atnt', plays:25893, likes:757, recency:4}, {title:'cricket', plays:20943, likes:8374, recency:7}]
+    //using plays as int, likes as int, and recency as an int
+    const videoList = [{title:'comcast', plays:8888888888, likes:45324, recency:2}, {title:'verizon', plays:1321, likes:214, recency:0}, {title:'atnt', plays:25893, likes:757, recency:4}, {title:'cricket', plays:20943, likes:8374, recency:7}]
 
-    // History == 0, Most Played == 1, Most Liked == 2  
-    const [currentTab, setCurrentTab] = useState(0)     
+    // History == 0, Most Played == 1, Most Liked == 2
+    const [currentTab, setCurrentTab] = useState(0)
 
     function compareByLikes(a, b){
         return a.likes - b.likes
