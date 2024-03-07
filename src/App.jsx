@@ -4,6 +4,7 @@ import { Header } from './Header'
 import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from './components/Contributors'
 
 import { VideoPlayer } from './components/VideoPlayer'
+import StatsPage from './pages/StatsPage'
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
         <Manh/>
         <EthanKy />
       </div>
+      <StatsPage />
     </>
     )
   }
