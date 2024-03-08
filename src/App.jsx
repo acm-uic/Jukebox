@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router-dom";
 // pages
 import Home from './pages/Home';
 import Contributor from './pages/Contributor';
-import Stats from './pages/Stats';
+import StatsPage from './pages/StatsPage';
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home/> } />
         <Route path="/contributors" element={ <Contributor/> } />
-        <Route path="/stats" element={ <Stats/> } />
+        <Route path="/stats" element={ <StatsPage/> } />
       </Routes>
     </div>
     
