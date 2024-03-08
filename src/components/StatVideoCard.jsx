@@ -14,7 +14,7 @@ export default function StatVideoCard({video}) {
   }
 
   return (
-    <div className='w-full h-[98px] bg-[#464545] flex justify-between items-center text-[#ffffff] py-2 px-3 rounded'>
+    <div className='w-[862px] h-[108px] bg-[#464545] flex justify-between items-center text-[#ffffff] py-2 px-3 rounded'>
       <div className='h-full flex flex-col gap-1'>
         <div className='text-5xl font-bold'>{title}</div>
         <div className='flex items-center'>
