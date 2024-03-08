@@ -1,25 +1,28 @@
-import ReactPlayer from 'react-player'
 import './App.css'
 import { Header } from './Header'
-import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from './components/Contributors'
 
-import { VideoPlayer } from './components/VideoPlayer'
+
+// routing
+import { Routes, Route } from "react-router-dom";
+
+// pages
+import Home from './pages/Home';
+import Contributor from './pages/Contributor';
+import StatsPage from './pages/StatsPage';
 
 function App() {
 
   return (
-    <>
+    <div>
       <Header/>
-      <VideoPlayer/>
-      <div>
-        <AdrianKnight/>
-        <OwenNeal/>
-        <Andre/>
-        <Manh/>
-        <EthanKy />
-      </div>
-    </>
-    )
-  }
+      <Routes>
+        <Route path="/" element={ <Home/> } />
+        <Route path="/contributors" element={ <Contributor/> } />
+        <Route path="/stats" element={ <StatsPage/> } />
+      </Routes>
+    </div>
+    
+  )
+}
 
 export default App
