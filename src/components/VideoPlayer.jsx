@@ -10,6 +10,7 @@ export const VideoPlayer = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setPlayerUrl(inputUrl);
+    setInputUrl("");
   };
 
   return (
