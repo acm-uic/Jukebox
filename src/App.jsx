@@ -11,7 +11,7 @@ import Contributor from './pages/Contributor';
 import StatsPage from './pages/StatsPage';
 
 function App() {
-
+  
   return (
     <div>
       <Header/>
