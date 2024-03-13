@@ -25,9 +25,9 @@ export default function StatsPage() {
         return a.recency - b.recency
     }
 
-  return (
-    <div className='min-h-screen flex-grow bg-[#262425] flex flex-col items-center text-[#FFFFFF] py-[71px]'>
-        <div className='flex gap-10 text-5xl w-[991px] justify-between p-2 font-extrabold mb-[37px]'>
+  /*return (
+    <div className='min-h-screen w-full flex-grow bg-[#262425] flex flex-col items-center text-[#FFFFFF] py-[71px]'>
+        <div className='flex text-center lg:gap-10 gap-2 lg:text-5xl text-4xl w-full lg:w-[991px] justify-between py-2 font-extrabold mb-[37px] px-2 sm:px-20'>
             <div
             onClick={() => {setCurrentTab(0)}}
             className={
@@ -61,9 +61,9 @@ export default function StatsPage() {
                 <StatVideoCard key={index} video={vid} />
             )}
             {currentTab == 1 && videoList.sort(compareByPlays).reverse().map((vid, index) =>
-            <div key={index} className='flex items-center gap-9'>
-                <div className='absolute -left-1/4 text-2xl font-extrabold'>{`Plays: ${vid.plays}`}</div>       
+            <div key={index} className='flex-col flex items-center lg:gap-9 gap-1'>
                 <StatVideoCard key={index} video={vid} />
+                <div className='lg:absolute lg:-left-1/4 text-2xl font-extrabold'>{`Plays: ${vid.plays}`}</div>       
             </div>
             )}
             {currentTab == 2 && videoList.sort(compareByLikes).reverse().map((vid, index) =>
@@ -74,5 +74,5 @@ export default function StatsPage() {
             )}
         </div>
     </div>
-  )
+  )*/
 }

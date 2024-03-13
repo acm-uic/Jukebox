@@ -14,9 +14,9 @@ export default function StatVideoCard({video}) {
   }
 
   return (
-    <div className='w-[862px] h-[108px] bg-[#464545] flex justify-between items-center text-[#ffffff] py-2 px-3 rounded'>
+    <div className='w-full lg:w-[862px] lg:h-[108px] bg-[#464545] flex justify-between items-center text-[#ffffff] py-2 px-3 rounded'>
       <div className='h-full flex flex-col gap-1'>
-        <div className='text-5xl font-bold'>{title}</div>
+        <div className='lg:text-5xl sm:text-4xl text-3xl font-bold'>{title}</div>
         <div className='flex items-center'>
           <button onClick={() => setShowUrl(!showUrl)}className='text-sm active:scale-90 active:text-gray-500 transition duration-100 ease-in-out'>
             <img src='/copyIcon.png'/>

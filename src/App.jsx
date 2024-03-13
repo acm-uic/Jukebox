@@ -13,14 +13,16 @@ import StatsPage from './pages/StatsPage';
 function App() {
   
   return (
-    <div>
+    <>
       <Header/>
-      <Routes>
-        <Route path="/" element={ <Home/> } />
-        <Route path="/contributors" element={ <Contributor/> } />
-        <Route path="/stats" element={ <StatsPage/> } />
-      </Routes>
-    </div>
+      <div className='pt-[96px]'>
+        <Routes>
+          <Route path="/" element={ <Home/> } />
+          <Route path="/contributors" element={ <Contributor/> } />
+          <Route path="/stats" element={ <StatsPage/> } />
+        </Routes>
+      </div>
+    </>
     
   )
 }
