@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import MobileDropdown from "./components/MobileDropdown";
+import WebDropdown from "./components/WebDropdown";
 
 export const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -7,53 +9,20 @@ export const Header = () => {
   function handleClick() {
     setMenu(!menu);
   }
-
+  
   return (
-    <nav className="fixed z-50 px-4 flex flex-row items-center justify-between w-full h-24 font-black bg-neutral-900 text-white">
-      <div>
-        <button onClick={handleClick}>Menu</button>
+    <nav className="fixed z-50 px-4 flex items-center justify-between w-full h-24 font-black bg-neutral-900 text-white">
+      <div className='lg:w-1/4'>
+        <button className='lg:hidden' onClick={handleClick}>Menu</button>
+        <div className="lg:inline-block hidden w-full">
+            <WebDropdown />
+        </div>
         {menu && (
-          <ul className="absolute left-0 top-[96px] bg-gray-400 w-full flex flex-col items-center gap-1 py-1 text-xl font-normal text-gray-300">
-            <li className="hover:text-white hover:underline w-full py-2">
-              <Link
-                onClick={() => {
-                  setMenu(false);
-                }}
-                className="w-full flex justify-center"
-                to="/"
-              >
-                Home
-              </Link>
-            </li>
-            <div className="border w-full" />
-            <li className="hover:text-white hover:underline w-full py-2">
-              <Link
-                onClick={() => {
-                  setMenu(false);
-                }}
-                className="w-full flex justify-center"
-                to="/stats"
-              >
-                Stats
-              </Link>
-            </li>
-            <div className="border w-full" />
-            <li className="hover:text-white hover:underline w-full py-2">
-              <Link
-                onClick={() => {
-                  setMenu(false);
-                }}
-                className="w-full flex justify-center"
-                to="/contributors"
-              >
-                Contributors
-              </Link>
-            </li>
-          </ul>
+          <MobileDropdown />
         )}
       </div>
-      <h1 className="text-center text-xl md:text-4xl"> ACM@UIC JUKEBOX </h1>
-      <div className="flex flex-row-reverse items-center h-full">
+      <h1 className="text-center text-xl md:text-4xl lg:w-1/2"> ACM@UIC JUKEBOX </h1>
+      <div className=" flex flex-row-reverse items-center h-full lg:w-1/4">
         <button className="h-1/2 aspect-square">
           <img src="src/images/ProfilePic.png" />
         </button>
