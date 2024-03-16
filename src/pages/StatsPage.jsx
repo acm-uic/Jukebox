@@ -98,8 +98,7 @@ export default function StatsPage() {
           videoList
             .sort(compareByRecency)
             .map((vid, index) => 
-            <div  key={index} className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full">
-
+            <div  key={index} className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3">
               <StatVideoCard video={vid} />
             </div>
             )}
@@ -110,7 +109,7 @@ export default function StatsPage() {
             .map((vid, index) => (
               <div
                 key={index}
-                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full"
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
               >
                 <StatVideoCard video={vid} />
                 <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Plays: ${vid.plays}`}</div>
@@ -123,7 +122,7 @@ export default function StatsPage() {
             .map((vid, index) => (
               <div
                 key={index}
-                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full"
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
               >
                 <StatVideoCard video={vid} />
                 <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Likes: ${vid.likes}`}</div>
