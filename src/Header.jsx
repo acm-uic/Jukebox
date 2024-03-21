@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import MobileDropdown from "./components/MobileDropdown";
-import WebDropdown from "./components/WebDropdown";
+import MenuDropdown from "./components/MenuDropdown";
 
 export const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -12,13 +10,10 @@ export const Header = () => {
   
   return (
     <nav className="fixed z-50 px-4 flex items-center justify-between w-full h-24 font-black bg-neutral-900 text-white">
-      <div className='lg:w-1/4'>
-        <button className='lg:hidden' onClick={handleClick}>Menu</button>
-        <div className="lg:inline-block hidden w-full">
-            <WebDropdown />
-        </div>
+      <div className='lg:w-1/4 flex gap-2 lg:gap-4'>
+        <button onClick={handleClick}>Menu</button>
         {menu && (
-          <MobileDropdown />
+          <MenuDropdown />
         )}
       </div>
       <h1 className="text-center text-xl md:text-4xl lg:w-1/2"> ACM@UIC JUKEBOX </h1>
