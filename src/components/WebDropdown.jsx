@@ -5,34 +5,13 @@ export default function WebDropdown() {
   return (
     <ul className="flex gap-4 min-w-[240px]">
       <li>
-        <Link
-          onClick={() => {
-            setMenu(false);
-          }}
-          to="/"
-        >
-          Home
-        </Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link
-          onClick={() => {
-            setMenu(false);
-          }}
-          to="/stats"
-        >
-          Stats
-        </Link>
+        <Link to="/stats">Stats</Link>
       </li>
       <li>
-        <Link
-          onClick={() => {
-            setMenu(false);
-          }}
-          to="/contributors"
-        >
-          Contributors
-        </Link>
+        <Link to="/contributors">Contributors</Link>
       </li>
     </ul>
   );
