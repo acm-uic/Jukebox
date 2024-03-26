@@ -1,8 +1,26 @@
+import { VideoContextProvider, videoContext } from "./domain/videoContext";
+import { useContext } from 'react';
 
-export const SongControl = ({video}) => {
+export const SongControl = () => {
     {/**Will add volume dial in future */}
 
-    const {likes, skips, skiplimit, duration, title} = video;
+    let video = {
+        id: 3,
+        url: "Youtube.com", 
+        title: "No video",
+        duration: 0,
+        plays: 0,
+        likes: 0,
+        skips: 0,
+        skiplimit: 10
+    }
+
+    
+    let {current} = useContext(videoContext)
+    if (Object.keys(current).length == 0) {
+        current = video;
+    }
+    const {likes, skips, skiplimit, duration, title} = current;
     const durationString = new Date(duration * 1000).toISOString().substring(14,19)
 
 
