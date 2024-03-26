@@ -42,7 +42,7 @@ export function VideoContextProvider({ children }) {
            setQueue(newArray); // Use concat instead of push for immutability
            setHistory(history.concat([newVid]))
            console.log(queue)
-           if (Object.keys(current).length === 0) {
+           if (Object.keys(current).length == 0) {
             console.log("EMPTY");
             nextVideo();
            }
