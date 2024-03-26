@@ -1,21 +1,27 @@
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import MenuDropdown from "./components/MenuDropdown";
 
 export const Header = () => {
-    return (
-        <>
-        <nav className = "px-20 flex flex-row items-center w-screen h-24 text-4xl h-150px font-black bg-neutral-900 text-white">
-            <ul className="flex flex-1 text-xl font-normal gap-8 text-gray-300 flex-wrap">
-                <li className="inline hover:text-white"><Link to="/">Home</Link></li>
-                <li className="inline hover:text-white"><Link to="/stats">Stats</Link></li>
-                <li className="inline hover:text-white"><Link to="/contributors">Contributors</Link></li>
-            </ul>
-            <h1 className="text-center"> ACM@UIC JUKEBOX </h1>
-            <div className="flex flex-1 flex-row-reverse items-center h-full">
-            <button className="h-3/4 aspect-square">
-                <img src="src/images/ProfilePic.png"/>
-            </button>
-            </div>
-        </nav>
-        </>
-    )
+  const [menu, setMenu] = useState(false);
+
+  function handleClick() {
+    setMenu(!menu);
+  }
+  
+  return (
+    <nav className="fixed z-50 px-4 flex items-center justify-between w-full h-24 font-black bg-neutral-900 text-white">
+      <div className='lg:w-1/4 flex gap-2 lg:gap-4'>
+        <button onClick={handleClick}>Menu</button>
+        {menu && (
+          <MenuDropdown />
+        )}
+      </div>
+      <h1 className="text-center text-xl md:text-4xl lg:w-1/2"> ACM@UIC JUKEBOX </h1>
+      <div className=" flex flex-row-reverse items-center h-full lg:w-1/4">
+        <button className="h-1/2 aspect-square">
+          <img src="src/images/ProfilePic.png" />
+        </button>
+      </div>
+    </nav>
+  );
 };
