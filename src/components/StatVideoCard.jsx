@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function StatVideoCard({ video }) {
@@ -15,7 +15,7 @@ export default function StatVideoCard({ video }) {
   return (
     <div className="w-full md:h-[108px] bg-[#464545] flex flex-col md:flex-row md:gap-0 gap-2 justify-between items-center text-[#ffffff] py-2 px-3 rounded font-bold">
       <div className="h-full w-full flex flex-col md:justify-around md:w-3/4">
-        <div className="block md:max-w md:text-4xl text-3xl overflow-hidden whitespace-nowrap text-ellipsis">
+        <div className="block md:max-w md:text-4xl text-3xl overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">
           {title}
         </div>
         <div className="flex items-center">
