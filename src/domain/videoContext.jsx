@@ -34,6 +34,7 @@ export function VideoContextProvider({ children }) {
              plays: 0,
              likes: 0,
              skips: 0,
+             skiplimit: 5,
            };
            console.log("newVid");
            const newArray = queue.concat([newVid])
