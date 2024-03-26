@@ -1,9 +1,16 @@
-
 import './App.css'
-import { AdrianKnight } from './components/Contributors'
-import { OwenNeal } from './components/Contributors'
-import { EthanKy } from './components/Contributors'
 import { Header } from './Header'
+
+// context
+import { VideoContextProvider } from "./domain/videoContext";
+
+// routing
+import { Routes, Route } from "react-router-dom";
+
+// pages
+import Home from './pages/Home';
+import Contributor from './pages/Contributor';
+import StatsPage from './pages/StatsPage';
 import { SongControl } from './SongControl'
 
 function App() {
@@ -19,16 +26,16 @@ function App() {
   }
 
   return (
-    <>
+    <VideoContextProvider>
       <Header/>
-      <div>
-        <AdrianKnight/>
-        <OwenNeal/>
-        <EthanKy/>
-      </div>
+      <Routes>
+        <Route path="/" element={ <Home/> } />
+        <Route path="/contributors" element={ <Contributor/> } />
+        <Route path="/stats" element={ <StatsPage/> } />
+      </Routes>
       <SongControl video = {video} />
-    </>
-    )
-  }
+    </VideoContextProvider>
+  );
+}
 
 export default App
