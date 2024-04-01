@@ -2,7 +2,7 @@ import './App.css'
 import { Header } from './Header'
 
 // context
-import { VideoContextProvider, videoContext } from "./domain/videoContext";
+import { VideoContextProvider} from "./domain/videoContext";
 
 // routing
 import { Routes, Route } from "react-router-dom";
@@ -11,7 +11,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Contributor from './pages/Contributor';
 import StatsPage from './pages/StatsPage';
-import { SongControl } from './SongControl'
+import { SongControl } from './components/SongControl'
 
 function App() {
 

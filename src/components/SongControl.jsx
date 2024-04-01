@@ -1,4 +1,4 @@
-import { VideoContextProvider, videoContext } from "./domain/videoContext";
+import { videoContext } from "../domain/videoContext";
 import { useContext } from 'react';
 
 export const SongControl = () => {
@@ -25,7 +25,7 @@ export const SongControl = () => {
 
 
     return (
-        <div className = "flex flex-row self-center items-center w-screen h-32 p-8 text-4xl font-bold bg-neutral-900 text-white absolute bottom-0">
+        <div className = "flex flex-row self-center items-center w-screen h-32 p-8 text-4xl font-bold bg-neutral-900 text-white fixed bottom-0">
 
             {/*Centering stores title and playback bar */}
             <div className = "flex flex-col w-screen space-y-4 self-center">
