@@ -18,14 +18,17 @@ function App() {
   return (
     <VideoContextProvider>
       <Header/>
-      <Routes>
-        <Route path="/" element={ <Home/> } />
-        <Route path="/contributors" element={ <Contributor/> } />
-        <Route path="/stats" element={ <StatsPage/> } />
-      </Routes>
-      <SongControl/>
+      <div className='pt-[96px]'>
+        <Routes>
+          <Route path="/" element={ <Home/> } />
+          <Route path="/contributors" element={ <Contributor/> } />
+          <Route path="/stats" element={ <StatsPage/> } />
+        </Routes>
+        <SongControl/>
+      </div>
     </VideoContextProvider>
-  );
+    
+  )
 }
 
 export default App
