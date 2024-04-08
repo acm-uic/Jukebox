@@ -2,9 +2,7 @@ import { videoContext } from "../domain/videoContext";
 import { useContext } from "react";
 
 export const SongControl = () => {
-  {
-    /**Will add volume dial in future */
-  }
+//Will add volume dial in future 
 
   let video = {
     id: 3,
@@ -17,7 +15,7 @@ export const SongControl = () => {
     skiplimit: 10,
   };
 
-  let { current } = useContext(videoContext);
+  let { current, nextVideo } = useContext(videoContext);
   if (Object.keys(current).length == 0) {
     current = video;
   }
@@ -25,7 +23,12 @@ export const SongControl = () => {
   const durationString = new Date(duration * 1000)
     .toISOString()
     .substring(14, 19);
-
+  
+    function handleSkip() {
+        if(current == video) return;
+        console.log("Skip");
+        nextVideo();
+    }
   return (
     <div className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-screen px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0">
       {/* The Title */}
@@ -39,7 +42,7 @@ export const SongControl = () => {
 
       {/* Stores # of skips */}
       <div className="flex items-center gap-4 h-16 text-xl md:text-2xl">
-        <button className="bg-neutral-600 w-36 h-10 rounded-l text-white">
+        <button onClick={() => handleSkip()} className="bg-neutral-600 w-36 h-10 rounded-l text-white">
           Skip
         </button>
         <p>
@@ -55,38 +58,4 @@ export const SongControl = () => {
     </div>
   );
 
-  return (
-    <div className="flex flex-col md:flex-row self-center items-center w-screen md:h-32 p-8 text-4xl font-bold bg-neutral-900 text-white fixed bottom-0">
-      {/*Centering stores title and playback bar */}
-      <div className="flex flex-col w-full space-y-4 self-center">
-        {/*The Title*/}
-        <p className="flex justify-start items-center">Title: {title}</p>
-        {/*Progress bar and time left */}
-        <div className="flex space-x-10 items-center self-end">
-          <progress className=" w-[800px] h-2"></progress>
-          <p className="text-lg">{durationString}</p>
-        </div>
-      </div>
-
-      {/* Stores skip count and likes count */}
-      <div className="flex flex-col justify-center space-y-4 h-20 items-end w-150 text-3xl text-gray-400">
-        {/**Stores # of skips */}
-        <div className="flex space-x-8 h-16 text-2xl0">
-          <button className="bg-neutral-600 w-36 h-10 rounded-l text-white">
-            Skip
-          </button>
-          <p>
-            {" "}
-            {skips}/{skiplimit}
-          </p>
-        </div>
-
-        {/* Includes likes and count*/}
-        <div className="flex flex-row items-center space-x-4">
-          <img className="h-12 w-12" src="src/images/Like0.png" />
-          <p className="flex">{likes}</p>
-        </div>
-      </div>
-    </div>
-  );
 };
