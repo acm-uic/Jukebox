@@ -1,9 +1,9 @@
 import { videoContext } from "../domain/videoContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export const SongControl = () => {
-//Will add volume dial in future 
-
+//Will add volume dial in future update
+    
   let video = {
     id: 3,
     url: "Youtube.com",
@@ -14,7 +14,7 @@ export const SongControl = () => {
     skips: 0,
     skiplimit: 10,
   };
-
+  const [ minimal, setMinimal ] = useState(true);
   let { current, nextVideo } = useContext(videoContext);
   if (Object.keys(current).length == 0) {
     current = video;
@@ -30,9 +30,9 @@ export const SongControl = () => {
         nextVideo();
     }
   return (
-    <div className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-screen px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0">
+    <div onMouseEnter={()=>setMinimal(false)} onMouseLeave={()=>setMinimal(true)} className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-screen px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0">
       {/* The Title */}
-      <p className="block md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">Title: {title}</p>
+      <p className="block mr-2 md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">Title: {title}</p>
 
       {/* Progress bar and time left */}
       <div className="flex gap-4 items-center">
@@ -41,7 +41,7 @@ export const SongControl = () => {
       </div>
 
       {/* Stores # of skips */}
-      <div className="flex items-center gap-4 h-16 text-xl md:text-2xl">
+      <div className={minimal ? 'hidden' : "flex items-center gap-4 h-16 text-xl md:text-2xl"}>
         <button onClick={() => handleSkip()} className="bg-neutral-600 w-36 h-10 rounded-l text-white">
           Skip
         </button>
@@ -51,7 +51,7 @@ export const SongControl = () => {
       </div>
 
       {/* Includes likes and count*/}
-      <div className="flex flex-row md:justify-end items-center space-x-4">
+      <div className={minimal ? 'hidden' : "flex flex-row md:justify-end items-center space-x-4"}>
         <img className="size-8 md:size-12" src="src/images/Like0.png" />
         <p className="flex">{likes}</p>
       </div>

@@ -1,4 +1,4 @@
-import './App.css'
+
 import { Header } from './Header'
 
 // context
@@ -18,7 +18,7 @@ function App() {
   return (
     <VideoContextProvider>
       <Header/>
-      <div className='pt-[96px]'>
+      <div className='py-24 md:pb-28'>
         <Routes>
           <Route path="/" element={ <Home/> } />
           <Route path="/contributors" element={ <Contributor/> } />
