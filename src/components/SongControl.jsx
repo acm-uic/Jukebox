@@ -33,7 +33,7 @@ export const SongControl = () => {
   return (
     <div
       onMouseEnter={() => setMinimal(false)}
-      
+      onMouseLeave={() => setMinimal(true)}
       className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-full md:h-40 px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0"
     >
       {/* The Title */}
