@@ -1,4 +1,15 @@
 // our video object contains: id, url, title,duration(seconds),plays,likes,skips
+import pb from "./pocketbase"
+
+export async function getQueue() {
+  try {
+    const products = await pb.collection("products").getFullList()
+    return products
+  } catch (e) {
+    console.log(e)
+    return []
+  }
+}
 
 export async function getVideoDetails(videoId, apiKey) {
   const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&key=${apiKey}&id=${videoId}`;
