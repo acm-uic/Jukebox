@@ -33,7 +33,7 @@ export const SongControl = () => {
   return (
     <div
       onMouseEnter={() => setMinimal(false)}
-      onMouseLeave={() => setMinimal(true)}
+      
       className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-full md:h-40 px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0"
     >
       {/* The Title */}
@@ -58,36 +58,37 @@ export const SongControl = () => {
         <progress className="w-[800px] h-2" />
         <p className="text-lg">{durationString}</p>
       </div>
-
-      {/* Stores # of skips */}
-      <div
-        className={
-          minimal
-            ? "hidden"
-            : "flex items-center gap-4 h-16 text-xl md:text-2xl"
-        }
-      >
-        <button
-          onClick={() => handleSkip()}
-          className="bg-neutral-600 w-36 h-10 rounded-l text-white"
+      <div className="flex md:row-span-2 md:flex-col justify-between">
+        {/* Stores # of skips */}
+        <div
+          className={
+            minimal
+              ? "hidden"
+              : "flex items-center gap-4 h-16 text-xl md:text-2xl"
+          }
         >
-          Skip
-        </button>
-        <p>
-          {skips}/{skiplimit}
-        </p>
-      </div>
+          <button
+            onClick={() => handleSkip()}
+            className="bg-neutral-600 w-36 h-10 rounded-l text-white"
+          >
+            Skip
+          </button>
+          <p>
+            {skips}/{skiplimit}
+          </p>
+        </div>
 
-      {/* Includes likes and count*/}
-      <div
-        className={
-          minimal
-            ? "hidden"
-            : "flex flex-row md:justify-end items-center space-x-4"
-        }
-      >
-        <img className="size-8 md:size-12" src="src/images/Like0.png" />
-        <p className="flex">{likes}</p>
+        {/* Includes likes and count*/}
+        <div
+          className={
+            minimal
+              ? "hidden"
+              : "flex flex-row md:justify-end items-center space-x-4"
+          }
+        >
+          <img className="size-8 md:size-12" src="src/images/Like0.png" />
+          <p className="flex">{likes}</p>
+        </div>
       </div>
     </div>
   );
