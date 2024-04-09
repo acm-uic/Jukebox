@@ -5,7 +5,7 @@ export default function Home() {
   let { queue, current } = useContext(videoContext);
   //    console.log(current)
   return (
-    <>
+    <div className="w-full min-h-screen">
       <VideoPlayer />
       {current && (
         <div>
@@ -17,6 +17,6 @@ export default function Home() {
       {queue.map((vid, index) => (
         <h1 key={index}>{vid.title}</h1>
       ))}
-    </>
+    </div>
   );
 }

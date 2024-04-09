@@ -3,6 +3,7 @@ import profilePicOwen from "../images/black_hole.png"
 import profilePicEthan from "../images/EthanPic.png"
 import profilePicAndre from "../images/andreProfilePicture.png"
 import profilePicManh from "../images/manh.png"
+import profilePicElias from "../images/EliasPFP.png"
 
 export const AdrianKnight = () => {
   return (
@@ -90,6 +91,28 @@ export const Manh = () => {
             </h3>
             <div>
               <a href={"https://github.com/eky2"}>@eky2</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  export const Elias = () => {
+    return (
+      <div>
+        <div className="flex justify-center align-middle bg-black shadow-contributor max-w-[380px] h-[100px] m-5 ">
+          <img
+            alt="Elias Ascencio's Profile Picture"
+            className="rounded-full border-red-600 border-4 -translate-x-[20%] -translate-y-4 hover:"
+            src={profilePicElias}
+            width={100}
+            height={100}
+          />
+          <div className="text-red-600 text-center w-full self-center mr-5">
+            <h3 className="text-2xl">Elias Ascencio</h3>
+            <div>
+              <a href={"https://github.com/revenge789"}>@revenge789</a>
             </div>
           </div>
         </div>

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { videoContext } from "../domain/videoContext";
 
-export default function StatVideoCard({ video }) {
+export default function StatVideoCard({ video, addVideo }) {
   //taking title as string, length as seconds, url as string
-  const { title, length, url } = video;
-  const lengthString = new Date(length * 1000).toISOString().substring(14, 19);
+  const { addQueueUrl } = useContext(videoContext)
+  const { title, duration, url } = video;
+  const lengthString = new Date(duration * 1000).toISOString().substring(14, 19);
 
   const [showUrl, setShowUrl] = useState(false);
 
   function handleClick() {
     // Add what happens if the Queue button is pressed
+    addQueueUrl(url);
   }
 
   return (

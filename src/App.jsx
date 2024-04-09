@@ -1,34 +1,31 @@
-import './App.css'
-import { Header } from './Header'
+import { Header } from "./components/Header";
 
 // context
-import { VideoContextProvider} from "./domain/videoContext";
+import { VideoContextProvider } from "./domain/videoContext";
 
 // routing
 import { Routes, Route } from "react-router-dom";
 
 // pages
-import Home from './pages/Home';
-import Contributor from './pages/Contributor';
-import StatsPage from './pages/StatsPage';
-import { SongControl } from './components/SongControl'
+import Home from "./pages/Home";
+import Contributor from "./pages/Contributor";
+import StatsPage from "./pages/StatsPage";
+import { SongControl } from "./components/SongControl";
 
 function App() {
-
   return (
     <VideoContextProvider>
-      <Header/>
-      <div className='pt-[96px]'>
+      <Header />
+      <div className="py-24 md:pb-28">
         <Routes>
-          <Route path="/" element={ <Home/> } />
-          <Route path="/contributors" element={ <Contributor/> } />
-          <Route path="/stats" element={ <StatsPage/> } />
+          <Route path="/" element={<Home />} />
+          <Route path="/contributors" element={<Contributor />} />
+          <Route path="/stats" element={<StatsPage />} />
         </Routes>
-        <SongControl/>
       </div>
+      <SongControl />
     </VideoContextProvider>
-    
-  )
+  );
 }
 
-export default App
+export default App;
