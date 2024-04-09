@@ -31,14 +31,20 @@ export const VideoPlayer = () => {
 
   return (
     <div className="flex flex-col item-center w-full">
-      <div style={videoStyle} className="w-full">
-        <ReactPlayer
-          width="100%"
-          url={playerUrl}
-          playing={true}
-          controls
-          onEnded={() => nextVideo()}
-        />
+      <div
+        style={videoStyle}
+        className="max-h-[415px] aspect-video bg-black/85"
+      >
+        <div className="h-full aspect-video bg-black mx-auto">
+          <ReactPlayer
+            height={"100%"}
+            width={"100%"}
+            url={playerUrl}
+            playing={true}
+            controls
+            onEnded={() => nextVideo()}
+          />
+        </div>
       </div>
       <form className="m-auto" onSubmit={handleSubmit}>
         <label>
