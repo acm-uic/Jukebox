@@ -1,4 +1,4 @@
-import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy } from '../components/Contributors'
+import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy,Elias } from '../components/Contributors'
 
 export default function Contributor () {
     return (
@@ -8,6 +8,7 @@ export default function Contributor () {
             <Andre/>
             <Manh/>
             <EthanKy />
+            <Elias />
         </div>
     )
 }

@@ -37,27 +37,16 @@ export const SongControl = () => {
       className="grid grid-cols-1 md:grid-rows-2 md:grid-flow-col self-center items-center w-full md:h-40 px-8 py-4 text-3xl md:text-4xl font-bold bg-neutral-900 text-white fixed bottom-0"
     >
       {/* The Title */}
-      <p
-        className={
-          minimal
-            ? "block mx-auto md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap"
-            : "block mr-2 md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap"
-        }
-      >
+      <p className="block mr-2 md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">
         Title: {title}
       </p>
 
       {/* Progress bar and time left */}
-      <div
-        className={
-          minimal
-            ? "flex gap-4 items-center justify-center"
-            : "flex gap-4 items-center"
-        }
-      >
+      <div className="flex gap-4 items-center">
         <progress className="w-[800px] h-2" />
         <p className="text-lg">{durationString}</p>
       </div>
+      
       <div className="flex md:row-span-2 md:flex-col justify-between">
         {/* Stores # of skips */}
         <div
