@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { videoContext } from "../domain/videoContext";
+import { videoContext } from "../../domain/videoContext";
 
 export default function StatVideoCard({ video, addVideo }) {
   //taking title as string, length as seconds, url as string
-  const { addQueueUrl } = useContext(videoContext)
+  const { addQueueUrl } = useContext(videoContext);
   const { title, duration, url } = video;
-  const lengthString = new Date(duration * 1000).toISOString().substring(14, 19);
+  const lengthString = new Date(duration * 1000)
+    .toISOString()
+    .substring(14, 19);
 
   const [showUrl, setShowUrl] = useState(false);
 

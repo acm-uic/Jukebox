@@ -2,8 +2,9 @@ import { createContext, useState } from "react";
 import { extractVideoId, getVideoDetails } from "./getVideos";
 
 export const videoContext = createContext();
+
 export function VideoContextProvider({ children }) {
-  let [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([]);
   let [queue, setQueue] = useState([]);
   let [current, setCurrent] = useState({});
 
@@ -12,67 +13,84 @@ export function VideoContextProvider({ children }) {
   const addQueueUrl = async (videoUrl) => {
     const id = extractVideoId(videoUrl);
     const foundVid = history.find((video) => video.id === id);
+
     if (foundVid) {
-       console.log("foundVid");
-       setQueue(queue.concat([foundVid])); // Use concat instead of push for immutability
-       setHistory(history.concat([foundVid]));
-       if (Object.keys(current).length === 0) {
-        console.log("EMPTY");
-        nextVideo();
-       }
-       return true;
+      console.log("FoundVideo in history", foundVid);
+      if (Object.keys(current).length === 0) {
+        // If current is empty, set current to foundVid and update history
+        console.log("EMPTY", queue);
+        setCurrent(foundVid);
+        setHistory((prevHistory) => [...prevHistory, foundVid]);
+        return true;
+      }
+
+      setQueue((prevQueue) => [...prevQueue, foundVid]); // if current is not empty, add foundVid to queue and update history
+      setHistory((prevHistory) => [...prevHistory, foundVid]);
+      return true;
     }
+
     if (id) {
-       try {
-         const details = await getVideoDetails(id, import.meta.env.VITE_APP_YOUTUBE_APIKEY);
-         if (details) {
-           let newVid = {
-             id: id,
-             url: videoUrl,
-             title: details.title,
-             duration: details.duration,
-             plays: 0,
-             likes: 0,
-             skips: 0,
-             skiplimit: 5,
-           };
-           console.log("newVid");
-           const newArray = queue.concat([newVid])
-           queue = newArray
-           setQueue(newArray); // Use concat instead of push for immutability
-           setHistory(history.concat([newVid]))
-           console.log(queue)
-           if (Object.keys(current).length === 0) {
+      // If video is not in history, fetch video details
+      try {
+        const details = await getVideoDetails(
+          id,
+          import.meta.env.VITE_APP_YOUTUBE_APIKEY
+        );
+
+        if (details) {
+          // If video details are successfully retrieved
+          let newVid = {
+            id: id,
+            url: videoUrl,
+            title: details.title,
+            duration: details.duration,
+            plays: 0,
+            likes: 0,
+            skips: 0,
+            skiplimit: 5,
+          };
+          console.log("newVid");
+          const newArray = queue.concat([newVid]);
+          queue = newArray;
+          setQueue(newArray); // Use concat instead of push for immutability
+          setHistory(history.concat([newVid]));
+          console.log(queue);
+          if (Object.keys(current).length === 0) {
             console.log("EMPTY");
             nextVideo();
-           }
-           return true;
-         } else {
-           console.log("Video details could not be retrieved.");
-           return false;
-         }
-       } catch (error) {
-         console.error("Error fetching video details:", error);
-         return false;
-       }
+          }
+          return true;
+        } else {
+          // If video details could not be retrieved
+          console.log("Video details could not be retrieved.");
+          return false;
+        }
+      } catch (error) {
+        // If an error occurs while fetching video details◘
+        console.error("Error fetching video details:", error);
+        return false;
+      }
     } else {
-       console.log("Invalid YouTube URL.");
-       return false;
+      // If the video URL is invalid
+      console.log("Invalid YouTube URL.");
+      return false;
     }
-   };
-
+  };
 
   const nextVideo = () => {
     if (queue.length == 0) {
-        setCurrent({}) // Revert to empty start state
-        return
+      console.log("Queue is empty");
+      setCurrent({}); // Revert to empty start state
+      return;
     }
-    setCurrent(queue[0])
-    setQueue(queue.slice(1))
-  }
+    setCurrent(queue[0]);
+    setQueue(queue.slice(1));
+  };
 
   return (
-    <videoContext.Provider value={{ current, queue, history, addQueueUrl, nextVideo }}>
+    <videoContext.Provider
+      value={{ current, queue, history, addQueueUrl, nextVideo }}
+    >
       {children}
     </videoContext.Provider>
   );
