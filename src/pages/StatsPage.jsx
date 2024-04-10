@@ -3,6 +3,8 @@ import StatVideoCard from "../components/StatVideoCard";
 import { videoContext } from "../domain/videoContext";
 
 export default function StatsPage() {
+  const { history, queue } = useContext(videoContext);
+  const historyList = history.slice(0, history.length - queue.length).reverse();
   //using plays as int, likes as int, and recency as an int
   const videoList = [
     {
@@ -92,8 +94,7 @@ export default function StatsPage() {
       </div>
       <div className="flex flex-col md:items-center md:gap-9 gap-2 relative w-full">
         {currentTab == 0 && 
-          videoList
-            .sort((a,b) => b.recency - a.recency)
+          historyList
             .map((vid, index) => 
             <div  key={index} className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3">
               <StatVideoCard video={vid}/>

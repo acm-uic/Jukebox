@@ -72,7 +72,7 @@ export function VideoContextProvider({ children }) {
   }
 
   return (
-    <videoContext.Provider value={{ current, queue, addQueueUrl, nextVideo }}>
+    <videoContext.Provider value={{ current, queue, history, addQueueUrl, nextVideo }}>
       {children}
     </videoContext.Provider>
   );
