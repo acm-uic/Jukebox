@@ -1,17 +1,16 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import { videoContext } from "../domain/videoContext";
 export const VideoPlayer = () => {
   // Highly informed by this w3schools tutorial:
   // https://www.w3schools.com/react/react_forms.asp
-  let { addQueueUrl, current, nextVideo } = useContext(videoContext);
+  let { addQueueUrl, playing, setPlaying, secondsPlayed, setSecondsPlayed, current, nextVideo } = useContext(videoContext);
   const [playerUrl, setPlayerUrl] = useState("");
   const [inputUrl, setInputUrl] = useState("");
   const [showVideo, setShowVideo] = useState(true);
+  const playerRef = useRef();
 
   useEffect(() => {
-    console.log("effect");
-    console.log(current);
     setPlayerUrl(current.url);
   }, [current]);
 
@@ -25,6 +24,11 @@ export const VideoPlayer = () => {
     setShowVideo((prev) => !prev);
   };
 
+  const seekLastPlayed = () => {
+    playerRef.current.seekTo(secondsPlayed, "seconds");
+    setPlaying(true)
+  }
+
   const videoStyle = {
     display: showVideo ? "block" : "none",
   };
@@ -37,11 +41,17 @@ export const VideoPlayer = () => {
       >
         <div className="h-full aspect-video bg-black mx-auto">
           <ReactPlayer
+          ref={playerRef}
             height={"100%"}
             width={"100%"}
-            url={playerUrl}
-            playing={true}
+            url={playerUrl} 
+            playing={playing}
             controls
+            progressInterval={100}
+            onReady={() => seekLastPlayed()}
+            onPause={() => setPlaying(false)}
+            onPlay={() => setPlaying(true)}
+            onProgress={({ playedSeconds }) => setSecondsPlayed(playedSeconds)}
             onEnded={() => nextVideo()}
           />
         </div>

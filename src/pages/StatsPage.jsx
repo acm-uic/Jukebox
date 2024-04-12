@@ -9,6 +9,13 @@ export default function StatsPage() {
   //using plays as int, likes as int, and recency as an int
   const videoList = [
     {
+      title: "5 second timer",
+      url:"https://youtu.be/GM_3IlttE-I?si=diSmC-rKBVyPCL4y",
+      duration: 5,
+      plays:0,
+      likes:0,
+    },
+    {
       title: "Do I Wanna Know?hbjhbiuhnuinuhijdklaskdlsadjlaks",
       url: "https://www.youtube.com/watch?v=bpOSxM0rNPM",
       duration: 365,

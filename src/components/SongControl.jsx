@@ -1,11 +1,13 @@
 import ReactPlayer from "react-player";
 import { videoContext } from "../domain/videoContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const SongControl = () => {
   //Will add volume dial in future update
+  const location = useLocation();
 
-  let video = {
+  const video = {
     id: 3,
     url: "Youtube.com",
     title: "No video",
@@ -15,12 +17,38 @@ export const SongControl = () => {
     skips: 0,
     skiplimit: 10,
   };
-  const [minimal, setMinimal] = useState(true);
-  let { current, nextVideo } = useContext(videoContext);
+
+  let {
+    current,
+    playing,
+    setPlaying,
+    secondsPlayed,
+    setSecondsPlayed,
+    nextVideo,
+  } = useContext(videoContext);
+
   if (Object.keys(current).length == 0) {
     current = video;
   }
+
   const { likes, skips, skiplimit, duration, title } = current;
+
+  const [minimal, setMinimal] = useState(true);
+  const playerRef = useRef();
+  const [isAllowedToPlay, setIsAllowedToPlay] = useState(true);
+
+  useEffect(() => {
+    setIsAllowedToPlay(location.pathname != "/" && playing);
+  }, [location.pathname, playing]);
+
+  useEffect(() => {
+    const updatePlayer = () => {
+      console.log("Updating player");
+      playerRef.current.seekTo(secondsPlayed);
+    };
+    updatePlayer();
+  }, [isAllowedToPlay]);
+
   const durationString = new Date(duration * 1000)
     .toISOString()
     .substring(14, 19);
@@ -33,18 +61,19 @@ export const SongControl = () => {
 
   return (
     <>
-      <div className="absolute top-80">
+      <div className="hidden">
         <ReactPlayer
-          height={"100px"}
-          width={"100px"}
-          url={
-            "https://www.youtube.com/watch?v=wkqwyrcuPs0&ab_channel=Joshtriedcoding"
-          }
-          playing={false}
-          controls={false}
-          onProgress={({playedSeconds}) => console.log(playedSeconds)}
+          height={"300px"}
+          width={"600px"}
+          url={current.url}
+          ref={playerRef}
+          progressInterval={100}
+          playing={isAllowedToPlay}
+          onProgress={({ playedSeconds }) => setSecondsPlayed(playedSeconds)}
+          onEnded={() => nextVideo()}
         />
       </div>
+
       <div
         onMouseEnter={() => setMinimal(false)}
         onMouseLeave={() => setMinimal(true)}
@@ -57,7 +86,12 @@ export const SongControl = () => {
 
         {/* Progress bar and time left */}
         <div className="flex gap-4 items-center">
-          <progress className="w-[800px] h-2" />
+          <div className="h-2 w-[800px] bg-slate-300">
+            <div
+              className="h-full bg-red-600"
+              style={{ width: `${(secondsPlayed / current.duration) * 100}%` }}
+            />
+          </div>
           <p className="text-lg">{durationString}</p>
         </div>
 

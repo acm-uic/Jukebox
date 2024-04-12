@@ -1,4 +1,4 @@
-import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy,Elias } from '../components/Contributors'
+import { AdrianKnight,OwenNeal,Andre,Manh,EthanKy,Elias } from '../components/ContributorPageComponents/Contributors'
 
 export default function Contributor () {
     return (

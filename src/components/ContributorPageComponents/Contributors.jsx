@@ -1,9 +1,9 @@
-import profilePicAdrian from "../images/Arrow Swarm trails.png"
-import profilePicOwen from "../images/black_hole.png"
-import profilePicEthan from "../images/EthanPic.png"
-import profilePicAndre from "../images/andreProfilePicture.png"
-import profilePicManh from "../images/manh.png"
-import profilePicElias from "../images/EliasPFP.png"
+import profilePicAdrian from "../../images/Arrow Swarm trails.png"
+import profilePicOwen from "../../images/black_hole.png"
+import profilePicEthan from "../../images/EthanPic.png"
+import profilePicAndre from "../../images/andreProfilePicture.png"
+import profilePicManh from "../../images/manh.png"
+import profilePicElias from "../../images/EliasPFP.png"
 
 export const AdrianKnight = () => {
   return (
