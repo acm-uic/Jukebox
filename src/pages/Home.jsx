@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full flex-grow flex flex-col items-center gap-2 text-white bg-neutral-800">
-      {/*dummy copy of VideoPlayer to get the spacing correct and not intefer with page content */}
+      {/*dummy copy of VideoPlayer to get the spacing correct and not interfere with page content */}
       <div className="flex flex-col item-center w-full">
         <div style={videoStyle} className="max-h-[415px] aspect-video">
           <div className="h-full aspect-video mx-auto"></div>
