@@ -4,36 +4,38 @@ import { extractVideoId, getVideoDetails } from "./getVideos";
 export const videoContext = createContext();
 
 export function VideoContextProvider({ children }) {
+  const [storage, setStorage] = useState([]);
   const [history, setHistory] = useState([]);
+
   let [queue, setQueue] = useState([]);
   let [current, setCurrent] = useState({});
+
   const [secondsPlayed, setSecondsPlayed] = useState(0); // percentage played of current video
   const [playing, setPlaying] = useState(true); // whether the video is playing or not
+  const [showVideo, setShowVideo] = useState(true);
 
-  /*useEffect(() => {
-    console.log("secondsPlayed", secondsPlayed);
-    console.log("playing", playing);
-  }, [secondsPlayed, playing]);*/
-  // our video object contains: id, url, title, duration(seconds),plays,likes,skips
+  
+  // our video object contains: id, url, title, duration(seconds), plays, likes, skips, lastPlayed
 
   const addQueueUrl = async (videoUrl) => {
     const id = extractVideoId(videoUrl);
-    const foundVid = history.find((video) => video.id === id);
+    const foundVid = storage.find((video) => video.id === id);
 
     if (foundVid) {
-      console.log("FoundVideo in history", foundVid);
+      console.log("foundVid in storge", foundVid);
+
       if (Object.keys(current).length === 0) {
-        // If current is empty, set current to foundVid and update history
-        console.log("EMPTY", queue);
+        // If current is empty, set current to foundVid and start playing
+        console.log("EMPTY CURRENT");
+
         setCurrent(foundVid);
         setPlaying(true);
         setSecondsPlayed(0);
-        setHistory((prevHistory) => [...prevHistory, {...foundVid, lastPlayed: new Date()}]);
         return true;
       }
 
-      setQueue((prevQueue) => [...prevQueue, foundVid]); // if current is not empty, add foundVid to queue and update history
-      setHistory((prevHistory) => [...prevHistory, {...foundVid, lastPlayed: new Date()}]);
+      // if current is not empty, add foundVid end of queue
+      setQueue((prevQueue) => [...prevQueue, foundVid]);
       return true;
     }
 
@@ -56,19 +58,21 @@ export function VideoContextProvider({ children }) {
             likes: 0,
             skips: 0,
             skiplimit: 5,
-            lastPlayed: new Date(),
+            lastPlayed: new Date(0),
           };
-          console.log("newVid");
-          const newArray = queue.concat([newVid]);
-          queue = newArray;
-          setQueue(newArray); // Use concat instead of push for immutability
-          setHistory(history.concat([newVid]));
-          console.log(queue);
+          console.log("made a newVid", newVid);
+          setStorage((prevStorage) => [...prevStorage, newVid]);
+
           if (Object.keys(current).length === 0) {
-            console.log("EMPTY");
+            console.log("EMPTY CURRENT");
+            setCurrent(newVid);
             setPlaying(true);
-            nextVideo();
+            setSecondsPlayed(0);
+            return true;
           }
+
+          setQueue((prevQueue) => [...prevQueue, newVid]); // Use concat instead of push for immutability
+          console.log("This is the queue", queue);
           return true;
         } else {
           // If video details could not be retrieved
@@ -88,6 +92,12 @@ export function VideoContextProvider({ children }) {
   };
 
   const nextVideo = () => {
+    console.log("Next video...");
+
+    updateStorage(current);
+
+    updateHistory(current);
+
     if (queue.length == 0) {
       console.log("Queue is empty");
       setCurrent({}); // Revert to empty start state
@@ -99,9 +109,56 @@ export function VideoContextProvider({ children }) {
     setQueue(queue.slice(1));
   };
 
+  function updateStorage(currentVideo) {
+    console.log("Updating storage...");
+    const updateVid = storage.find((vid) => vid.id === currentVideo.id);
+
+    if (!updateVid) {
+      console.error("Could not find video in storage to update.");
+      return;
+    }
+
+    updateVid.plays++;
+    updateVid.lastPlayed = new Date();
+    const updatedStorage = storage.map((vid) => {
+      if (vid.id === updateVid.id) {
+        return updateVid;
+      }
+      return vid;
+    });
+    setStorage(updatedStorage);
+  }
+
+  function updateHistory(currentVideo) {
+    console.log("Updating history...");
+    const updateVid = history.find((vid) => vid.id === currentVideo.id);
+
+    if (!updateVid) {
+      setHistory((prevHistory) => [...prevHistory, currentVideo]);
+      return;
+    }
+
+    updateVid.plays++;
+    updateVid.lastPlayed = new Date();
+    const filteredHistory = history.filter((vid) => vid.id !== updateVid.id);
+    setHistory([...filteredHistory, updateVid]);
+  }
+
   return (
     <videoContext.Provider
-      value={{ current, queue, history, secondsPlayed, playing, setPlaying, setSecondsPlayed, addQueueUrl, nextVideo }}
+      value={{
+        current,
+        queue,
+        history,
+        secondsPlayed,
+        playing,
+        showVideo,
+        setShowVideo,
+        setPlaying,
+        setSecondsPlayed,
+        addQueueUrl,
+        nextVideo,
+      }}
     >
       {children}
     </videoContext.Provider>

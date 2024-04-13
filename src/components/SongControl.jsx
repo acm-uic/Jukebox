@@ -1,11 +1,11 @@
 import ReactPlayer from "react-player";
 import { videoContext } from "../domain/videoContext";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { VideoPlayer } from "./VideoPlayer";
 
 export const SongControl = () => {
   //Will add volume dial in future update
-  const location = useLocation();
 
   const video = {
     id: 3,
@@ -18,12 +18,9 @@ export const SongControl = () => {
     skiplimit: 10,
   };
 
-  let {
+ let {
     current,
-    playing,
-    setPlaying,
     secondsPlayed,
-    setSecondsPlayed,
     nextVideo,
   } = useContext(videoContext);
 
@@ -34,20 +31,6 @@ export const SongControl = () => {
   const { likes, skips, skiplimit, duration, title } = current;
 
   const [minimal, setMinimal] = useState(true);
-  const playerRef = useRef();
-  const [isAllowedToPlay, setIsAllowedToPlay] = useState(true);
-
-  useEffect(() => {
-    setIsAllowedToPlay(location.pathname != "/" && playing);
-  }, [location.pathname, playing]);
-
-  useEffect(() => {
-    const updatePlayer = () => {
-      console.log("Updating player");
-      playerRef.current.seekTo(secondsPlayed);
-    };
-    updatePlayer();
-  }, [isAllowedToPlay]);
 
   const durationString = new Date(duration * 1000)
     .toISOString()
@@ -55,24 +38,13 @@ export const SongControl = () => {
 
   function handleSkip() {
     if (current == video) return;
-    console.log("Skip");
+    console.log("Skipping Song...");
     nextVideo();
   }
 
   return (
     <>
-      <div className="hidden">
-        <ReactPlayer
-          height={"300px"}
-          width={"600px"}
-          url={current.url}
-          ref={playerRef}
-          progressInterval={100}
-          playing={isAllowedToPlay}
-          onProgress={({ playedSeconds }) => setSecondsPlayed(playedSeconds)}
-          onEnded={() => nextVideo()}
-        />
-      </div>
+      <VideoPlayer />
 
       <div
         onMouseEnter={() => setMinimal(false)}

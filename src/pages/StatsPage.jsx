@@ -4,8 +4,8 @@ import { videoContext } from "../domain/videoContext";
 import StatsHeader from "../components/StatsPageComponents/StatsHeader";
 
 export default function StatsPage() {
-  const { history, queue } = useContext(videoContext);
-  const historyList = history.slice(0, history.length - queue.length).reverse();
+  const { history } = useContext(videoContext);
+
   //using plays as int, likes as int, and recency as an int
   const videoList = [
     {
@@ -48,20 +48,12 @@ export default function StatsPage() {
   // History == 0, Most Played == 1, Most Liked == 2
   const [currentTab, setCurrentTab] = useState(0);
 
-  function compareByLikes(a, b) {
-    return b.likes - a.likes;
-  }
-
-  function compareByPlays(a, b) {
-    return b.plays - a.plays;
-  }
-
   return (
     <div className="min-h-screen w-full flex-grow bg-[#262425] flex flex-col items-center text-[#FFFFFF] md:py-[71px] py-8">
       <StatsHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div className="flex flex-col md:items-center md:gap-9 gap-2 relative w-full">
         {currentTab == 0 &&
-          historyList.map((vid, index) => (
+          history.slice().reverse().map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
@@ -70,7 +62,7 @@ export default function StatsPage() {
             </div>
           ))}
         {currentTab == 1 &&
-          videoList.sort(compareByPlays).map((vid, index) => (
+          videoList.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
@@ -80,7 +72,7 @@ export default function StatsPage() {
             </div>
           ))}
         {currentTab == 2 &&
-          videoList.sort(compareByLikes).map((vid, index) => (
+          videoList.sort((a,b) =>  b.likes - a.likes).map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
