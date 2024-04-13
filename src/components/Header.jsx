@@ -9,7 +9,7 @@ export const Header = () => {
   }
 
   return (
-    <nav className="fixed z-50 px-4 flex items-center justify-between w-full h-24 font-black bg-neutral-900 text-white">
+    <nav className="fixed z-50 px-4 flex items-center justify-between w-full h-24 font-black bg-neutral-950 text-white">
       <div className="lg:w-1/4 flex gap-2 lg:gap-4">
         <button onClick={handleClick}>Menu</button>
         {menu && <MenuDropdown />}
