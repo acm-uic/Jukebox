@@ -1,17 +1,19 @@
 import { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { videoContext } from "../domain/videoContext";
+import { videoContext } from "../../domain/videoContext";
 
 export default function StatVideoCard({ video, addVideo }) {
   //taking title as string, length as seconds, url as string
-  const { addQueueUrl } = useContext(videoContext)
-  const { title, duration, url } = video;
-  const lengthString = new Date(duration * 1000).toISOString().substring(14, 19);
+  const { addQueueUrl } = useContext(videoContext);
+  const { title, duration, lastPlayed, url } = video;
+  const lengthString = new Date(duration * 1000)
+    .toISOString()
+    .substring(14, 19);
 
   const [showUrl, setShowUrl] = useState(false);
 
   function handleClick() {
-    // Add what happens if the Queue button is pressed
+    // queue button is pressed
     addQueueUrl(url);
   }
 
@@ -21,6 +23,9 @@ export default function StatVideoCard({ video, addVideo }) {
         <div className="block md:max-w md:text-4xl text-3xl overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">
           {title}
         </div>
+        {lastPlayed && (
+          <div>Last Played: {lastPlayed.toLocaleString() || ""}</div>
+        )}
         <div className="flex items-center">
           <button
             onClick={() => setShowUrl(!showUrl)}
