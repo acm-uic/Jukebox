@@ -4,7 +4,7 @@ import { videoContext } from "../domain/videoContext";
 import StatsHeader from "../components/StatsPageComponents/StatsHeader";
 
 export default function StatsPage() {
-  const { history } = useContext(videoContext);
+  const { history, storage } = useContext(videoContext);
 
   //using plays as int, likes as int, and recency as an int
   const videoList = [
@@ -62,7 +62,7 @@ export default function StatsPage() {
             </div>
           ))}
         {currentTab == 1 &&
-          videoList.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
+          storage.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"

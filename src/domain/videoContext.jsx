@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { extractVideoId, getVideoDetails } from "./getVideos";
 
 export const videoContext = createContext();
@@ -27,7 +27,6 @@ export function VideoContextProvider({ children }) {
       if (Object.keys(current).length === 0) {
         // If current is empty, set current to foundVid and start playing
         console.log("EMPTY CURRENT");
-
         setCurrent(foundVid);
         setPlaying(true);
         setSecondsPlayed(0);
@@ -128,7 +127,7 @@ export function VideoContextProvider({ children }) {
     });
     setStorage(updatedStorage);
   }
-
+  
   function updateHistory(currentVideo) {
     console.log("Updating history...");
     const updateVid = history.find((vid) => vid.id === currentVideo.id);
@@ -138,7 +137,6 @@ export function VideoContextProvider({ children }) {
       return;
     }
 
-    updateVid.plays++;
     updateVid.lastPlayed = new Date();
     const filteredHistory = history.filter((vid) => vid.id !== updateVid.id);
     setHistory([...filteredHistory, updateVid]);
@@ -150,6 +148,7 @@ export function VideoContextProvider({ children }) {
         current,
         queue,
         history,
+        storage,
         secondsPlayed,
         playing,
         showVideo,
