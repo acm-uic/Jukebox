@@ -10,10 +10,10 @@ export default function StatsPage() {
   const videoList = [
     {
       title: "5 second timer",
-      url:"https://youtu.be/GM_3IlttE-I?si=diSmC-rKBVyPCL4y",
+      url: "https://youtu.be/GM_3IlttE-I?si=diSmC-rKBVyPCL4y",
       duration: 5,
-      plays:0,
-      likes:0,
+      plays: 0,
+      likes: 0,
     },
     {
       title: "Do I Wanna Know?hbjhbiuhnuinuhijdklaskdlsadjlaks",
@@ -53,34 +53,41 @@ export default function StatsPage() {
       <StatsHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div className="flex flex-col md:items-center md:gap-9 gap-2 relative w-full">
         {currentTab == 0 &&
-          history.slice().reverse().map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-            </div>
-          ))}
+          storage
+            .slice()
+            .sort((a, b) => new Date(b.lastPlayed) - new Date(a.lastPlayed))
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+              </div>
+            ))}
         {currentTab == 1 &&
-          storage.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-              <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Plays: ${vid.plays}`}</div>
-            </div>
-          ))}
+          storage
+            .sort((a, b) => b.plays - a.plays)
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+                <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Plays: ${vid.plays}`}</div>
+              </div>
+            ))}
         {currentTab == 2 &&
-          videoList.sort((a,b) =>  b.likes - a.likes).map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-              <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Likes: ${vid.likes}`}</div>
-            </div>
-          ))}
+          videoList
+            .sort((a, b) => b.likes - a.likes)
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+                <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Likes: ${vid.likes}`}</div>
+              </div>
+            ))}
       </div>
     </div>
   );

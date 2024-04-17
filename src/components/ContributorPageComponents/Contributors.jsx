@@ -66,9 +66,9 @@ export const Manh = () => {
   return (
     <div>
       <div className="flex justify-center align-middle bg-[#03045e] shadow-contributor max-w-[380px] h-[100px] m-5 border-solid border-4 border-indigo-800">
-        <img alt="profile photo of Manh" className="rotate-90 -translate-x-[20%] -translate-y-4 aspect-square rounded-[50%] border-8 border-violet-600 hover:border-violet-400 hover:border-[6px]" src={profilePicManh}  width="100px" height="100px"/>
+        <img alt="profile photo of Manh" className="-translate-x-[20%] -translate-y-4 aspect-square rounded-[50%] border-8 border-violet-600 hover:border-violet-400 hover:border-[6px]" src={profilePicManh}  width="100px" height="100px"/>
         <div className="text-white text-center w-full self-center mr-5">
-          <h3 className="text-2xl  ">
+          <h3 className="text-2xl">
             Manh Phan
           </h3>
           <div>

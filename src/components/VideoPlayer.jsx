@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import ReactPlayer from "react-player";
 import { videoContext } from "../domain/videoContext";
 import { useLocation } from "react-router-dom";
@@ -15,6 +15,7 @@ export const VideoPlayer = () => {
     nextVideo,
     showVideo,
     setShowVideo,
+    handleStart
   } = useContext(videoContext);
 
   const [inputUrl, setInputUrl] = useState("");
@@ -55,6 +56,7 @@ export const VideoPlayer = () => {
             playing={playing}
             controls
             progressInterval={100}
+            onStart={() => handleStart()}
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
             onProgress={({ playedSeconds }) => setSecondsPlayed(playedSeconds)}
