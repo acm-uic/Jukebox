@@ -7,6 +7,7 @@ export const videoContext = createContext();
 
 export function VideoContextProvider({ children }) {
   const [queue, setQueue] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState(null);
 
   const [playing, setPlaying] = useState(true);
   const [showing, setShowing] = useState(true);
@@ -34,8 +35,14 @@ export function VideoContextProvider({ children }) {
       setQueue(queue);
     });
 
+    socket.on("currentVideoChanged", ({ currentVideo }) => {
+      console.log("Current video changed", currentVideo.title);
+      setCurrentVideo(currentVideo);
+    });
+
     return () => {
       socket.off("queueUpdated");
+      socket.off("currentVideoChanged");
     };
 
   }, []);
@@ -65,6 +72,7 @@ export function VideoContextProvider({ children }) {
       value={{
         queue,
         addVideoToQueue,
+        currentVideo,
       }}
     >
       {children}

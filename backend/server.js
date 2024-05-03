@@ -6,15 +6,15 @@ import { Server } from "socket.io";
 import { extractVideoId, getVideoDetails } from "./lib/VideoHelpers.js";
 
 //imports environment variables from .env or .env.local file
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: ".env.local" });
 
 //creating express app and server
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "*",
-    },
+  cors: {
+    origin: "*",
+  },
 });
 
 //state for songs (can posiibly be stored in a database)
@@ -33,12 +33,41 @@ app.use((req, res, next) => {
   next();
 });
 
+function startVideoTimer() {
+  if (videoTimer) {
+    clearInterval(videoTimer);
+  }
+
+  if (currentVideo) {
+    console.log("Starting video timer for ", currentVideo.title);
+
+    videoTimer = setTimeout(() => {
+      nextVideo();
+    }, currentVideo.duration * 1000);
+  }
+}
+
+function nextVideo() {
+  if (queue.length > 0) {
+    console.log("Video ended, next video starting...");
+    currentVideo = queue.shift();
+    io.emit("currentVideoChanged", { currentVideo });
+    io.emit("queueUpdated", { queue });
+    startVideoTimer();
+  } else {
+    console.log("Video ended, no more videos in queue.");
+    currentVideo = null;
+    io.emit("currentVideoChanged", { currentVideo });
+  }
+}
+
+//endpoints for storage and queue
 app.get("/songs/storage", (req, res) => {
-    return res.status(200).json(storage);
+  return res.status(200).json(storage);
 });
 
 app.get("/songs/queue", (req, res) => {
-    return res.status(200).json(queue);
+  return res.status(200).json(queue);
 });
 
 //add song through url
@@ -53,7 +82,7 @@ app.post("/songs/url", async (req, res) => {
   let video = storage.find((video) => video.id === videoId);
 
   if (!video) {
-    console.log("not found in storage")
+    console.log("not found in storage");
     const newVid = await getVideoDetails(videoId);
 
     if (!newVid) {
@@ -61,13 +90,26 @@ app.post("/songs/url", async (req, res) => {
     }
 
     const { id, title, duration } = newVid;
-    video = { id, url, title, duration, plays: 0, likes: 0, lastPlayed: new Date(0)};
+    video = {
+      id,
+      url,
+      title,
+      duration,
+      plays: 0,
+      likes: 0,
+      lastPlayed: new Date(0),
+    };
     storage.push(video);
   }
 
-  queue.push(video);
-
-  io.emit("queueUpdated", { queue});
+  if (currentVideo) {
+    queue.push(video);
+    io.emit("queueUpdated", { queue });
+  } else {
+    currentVideo = video;
+    io.emit("currentVideoChanged", { currentVideo });
+    startVideoTimer();
+  }
 
   return res.status(200).json(video);
 });

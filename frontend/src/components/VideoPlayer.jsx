@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { useLocation } from "react-router-dom";
 import { videoContext } from "../domain/videoContext";
@@ -8,23 +8,30 @@ export const VideoPlayer = () => {
   // Highly informed by this w3schools tutorial:
   // https://www.w3schools.com/react/react_forms.asp
 
-  const { addVideoToQueue } = useContext(videoContext);
+  const { addVideoToQueue, currentVideo } = useContext(videoContext);
 
+  
   const showVideo = true;
   const setShowVideo = () => {};
-  const current = {
-    name: "No video",
-  }
   const playing = true;
-
+  
   const [inputUrl, setInputUrl] = useState("");
   const playerRef = useRef();
 
+  useEffect(() => {
+    if(currentVideo && playerRef.current) {
+      playerRef.current.seekTo(0);
+    }
+  }, [currentVideo])
+
+
+//handles submitting url to queue
   const handleSubmit = async () => {
     addVideoToQueue(inputUrl);
     setInputUrl("");
   };
 
+  //handles viewing the player
   const toggleVideo = () => {
     setShowVideo((prev) => !prev);
   };
@@ -50,7 +57,7 @@ export const VideoPlayer = () => {
             ref={playerRef}
             height={"100%"}
             width={"100%"}
-            url={current.url}
+            url={currentVideo?.url}
             playing={playing}
             controls
             progressInterval={100}
