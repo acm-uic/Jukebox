@@ -1,11 +1,28 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import StatVideoCard from "../components/StatsPageComponents/StatVideoCard";
-import { videoContext } from "../domain/videoContext";
 import StatsHeader from "../components/StatsPageComponents/StatsHeader";
 
 export default function StatsPage() {
-  const { history } = useContext(videoContext);
+  
+  const [storage, setStorage] = useState([]); 
 
+  useEffect(() => {
+    //fetch storage
+    async function fetchStorage() {
+      const response = await fetch(import.meta.env.VITE_APP_BACKEND_URL + "/songs/storage")
+      const storageData = await response.json();
+
+      if (!response.ok) {
+        console.error("Failed to fetch storage");
+        return;
+      }
+
+      setStorage(storageData)
+    }
+
+    fetchStorage();
+
+  }, []);
   //using plays as int, likes as int, and recency as an int
   const videoList = [
     {
@@ -53,7 +70,7 @@ export default function StatsPage() {
       <StatsHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div className="flex flex-col md:items-center md:gap-9 gap-2 relative w-full">
         {currentTab == 0 &&
-          history.slice().reverse().map((vid, index) => (
+          storage.slice().reverse().map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
@@ -62,7 +79,7 @@ export default function StatsPage() {
             </div>
           ))}
         {currentTab == 1 &&
-          videoList.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
+          storage.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
@@ -72,7 +89,7 @@ export default function StatsPage() {
             </div>
           ))}
         {currentTab == 2 &&
-          videoList.sort((a,b) =>  b.likes - a.likes).map((vid, index) => (
+          storage.sort((a,b) =>  b.likes - a.likes).map((vid, index) => (
             <div
               key={index}
               className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"

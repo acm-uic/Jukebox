@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { videoContext } from "../../domain/videoContext";
 
-export default function StatVideoCard({ video, addVideo }) {
+export default function StatVideoCard({ video }) {
   //taking title as string, length as seconds, url as string
-  const { addQueueUrl } = useContext(videoContext);
+  const { addVideoToQueue } = useContext(videoContext);
   const { title, duration, lastPlayed, url } = video;
   const lengthString = new Date(duration * 1000)
     .toISOString()
@@ -14,7 +14,7 @@ export default function StatVideoCard({ video, addVideo }) {
 
   function handleClick() {
     // queue button is pressed
-    addQueueUrl(url);
+    addVideoToQueue(url);
   }
 
   return (

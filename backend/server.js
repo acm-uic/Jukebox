@@ -1,6 +1,7 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-import http, { get } from "http";
+import http from "http";
 import { Server } from "socket.io";
 import { extractVideoId, getVideoDetails } from "./lib/VideoHelpers.js";
 
@@ -10,7 +11,11 @@ dotenv.config({ path: '.env.local' });
 //creating express app and server
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+    },
+});
 
 //state for songs (can posiibly be stored in a database)
 let queue = [];
@@ -21,12 +26,20 @@ let videoTimer = null;
 //middleware to parse json
 app.use(express.json());
 
+app.use(cors());
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-app.get("/songs", (req, res) => {});
+app.get("/songs/storage", (req, res) => {
+    return res.status(200).json(storage);
+});
+
+app.get("/songs/queue", (req, res) => {
+    return res.status(200).json(queue);
+});
 
 //add song through url
 app.post("/songs/url", async (req, res) => {
@@ -48,7 +61,7 @@ app.post("/songs/url", async (req, res) => {
     }
 
     const { id, title, duration } = newVid;
-    video = { id, title, duration, plays: 0, likes: 0 };
+    video = { id, url, title, duration, plays: 0, likes: 0, lastPlayed: new Date(0)};
     storage.push(video);
   }
 

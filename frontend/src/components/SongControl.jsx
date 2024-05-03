@@ -11,24 +11,14 @@ export const SongControl = () => {
     id: 3,
     url: "Youtube.com",
     title: "No video",
-    duration: 0,
+    duration: 25,
     plays: 0,
     likes: 0,
     skips: 0,
     skiplimit: 10,
   };
 
- let {
-    current,
-    secondsPlayed,
-    nextVideo,
-  } = useContext(videoContext);
-
-  if (Object.keys(current).length == 0) {
-    current = video;
-  }
-
-  const { likes, skips, skiplimit, duration, title } = current;
+  const { likes, skips, skiplimit, duration, title } = video;
 
   const [minimal, setMinimal] = useState(true);
 
@@ -37,7 +27,7 @@ export const SongControl = () => {
     .substring(14, 19);
 
   function handleSkip() {
-    if (current == video) return;
+    if (video) return;
     console.log("Skipping Song...");
     nextVideo();
   }
@@ -61,7 +51,7 @@ export const SongControl = () => {
           <div className="h-2 w-[800px] bg-slate-300">
             <div
               className="h-full bg-red-600"
-              style={{ width: `${(secondsPlayed / current.duration) * 100}%` }}
+              style={{ width: `${(20 / video.duration) * 100}%` }}
             />
           </div>
           <p className="text-lg">{durationString}</p>
