@@ -1,7 +1,7 @@
 import { Header } from "./components/Header";
 
 // context
-import { VideoContextProvider } from "./domain/videoContext";
+import { VideoContextProvider } from "./contexts/videoContext";
 
 // routing
 import { Routes, Route } from "react-router-dom";

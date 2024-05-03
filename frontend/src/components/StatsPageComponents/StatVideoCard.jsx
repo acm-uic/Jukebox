@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { videoContext } from "../../domain/videoContext";
+import { videoContext } from "../../contexts/videoContext";
 
 export default function StatVideoCard({ video }) {
   //taking title as string, length as seconds, url as string

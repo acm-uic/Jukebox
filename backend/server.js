@@ -61,13 +61,17 @@ function nextVideo() {
   }
 }
 
-//endpoints for storage and queue
+//endpoints for storage, queue, and currentVideo
 app.get("/songs/storage", (req, res) => {
   return res.status(200).json(storage);
 });
 
 app.get("/songs/queue", (req, res) => {
   return res.status(200).json(queue);
+});
+
+app.get("/songs/current", (req, res) => {
+    return res.status(200).json(currentVideo);
 });
 
 //add song through url

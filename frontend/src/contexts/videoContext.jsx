@@ -11,6 +11,8 @@ export function VideoContextProvider({ children }) {
 
   const [playing, setPlaying] = useState(true);
   const [showing, setShowing] = useState(true);
+
+  const [playedSeconds, setPlayedSeconds] = useState(0);
   
 
   useEffect(() => {
@@ -28,6 +30,20 @@ export function VideoContextProvider({ children }) {
       setQueue(queueData);
     }
 
+    async function fetchCurrentVideo() {
+      const response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/songs/current`);
+      const currentData = await response.json();
+
+      if (!response.ok) {
+        console.error("Failed to fetch currentVideo");
+        return;
+      }
+
+      console.log("currentVideo fetched successfully", currentData);
+      setCurrentVideo(currentData);
+    }
+
+    fetchCurrentVideo();
     fetchQueue();
 
     socket.on("queueUpdated", ({ queue }) => {
@@ -73,6 +89,12 @@ export function VideoContextProvider({ children }) {
         queue,
         addVideoToQueue,
         currentVideo,
+        showing,
+        setShowing,
+        playing,
+        setPlaying,
+        playedSeconds,
+        setPlayedSeconds
       }}
     >
       {children}
