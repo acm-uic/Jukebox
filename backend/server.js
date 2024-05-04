@@ -17,7 +17,7 @@ const io = new Server(server, {
   },
 });
 
-//state for songs (can posiibly be stored in a database)
+//state for songs (can possibly be stored in a database) 
 let queue = [];
 let storage = [];
 let currentVideo = null;
@@ -61,6 +61,10 @@ function startVideoTimer() {
 }
 
 function nextVideo() {
+  skipCount = 0;
+  skipRequests.clear();
+  io.emit("skipCountUpdated", { skipCount });
+
   if (currentVideo) {
     updateStorage(currentVideo.id);
   }
@@ -157,8 +161,6 @@ io.on("connection", (socket) => {
 
       if (skipCount >= 5) {
         console.log("Skip count reached, skipping video");
-        skipCount = 0;
-        skipRequests.clear();
         nextVideo();
       }
 
