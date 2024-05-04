@@ -52,7 +52,7 @@ export function VideoContextProvider({ children }) {
     });
 
     socket.on("currentVideoChanged", ({ currentVideo }) => {
-      console.log("Current video changed", currentVideo.title);
+      console.log("Current video changed", currentVideo);
       setCurrentVideo(currentVideo);
     });
 
