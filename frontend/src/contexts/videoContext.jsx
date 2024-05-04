@@ -13,6 +13,7 @@ export function VideoContextProvider({ children }) {
   const [showing, setShowing] = useState(true);
 
   const [playedSeconds, setPlayedSeconds] = useState(0);
+  const [skips, setSkips] = useState(0);
   
 
   useEffect(() => {
@@ -55,10 +56,16 @@ export function VideoContextProvider({ children }) {
       console.log("Current video changed", currentVideo);
       setCurrentVideo(currentVideo);
     });
+    
+    socket.on("skipCountUpdated", ({ skipCount }) => {
+      console.log("Skip count updated", skipCount);
+      setSkips(skipCount);
+    });
 
     return () => {
       socket.off("queueUpdated");
       socket.off("currentVideoChanged");
+      socket.off("skipCountUpdated");
     };
 
   }, []);
@@ -83,6 +90,10 @@ export function VideoContextProvider({ children }) {
     console.log("Video added successfully");
   }
 
+  function skipVideo() {
+    socket.emit("skipRequest");
+  }
+
   return (
     <videoContext.Provider
       value={{
@@ -94,7 +105,9 @@ export function VideoContextProvider({ children }) {
         playing,
         setPlaying,
         playedSeconds,
-        setPlayedSeconds
+        setPlayedSeconds,
+        skips,
+        skipVideo,
       }}
     >
       {children}

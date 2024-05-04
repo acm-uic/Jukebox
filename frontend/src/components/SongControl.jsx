@@ -5,7 +5,7 @@ import { VideoPlayer } from "./VideoPlayer";
 export const SongControl = () => {
   //Will add volume dial in future update
 
-  let { playedSeconds, currentVideo } = useContext(videoContext);
+  let { playedSeconds, currentVideo, skips, skipVideo } = useContext(videoContext);
 
   const [minimal, setMinimal] = useState(true);
 
@@ -21,7 +21,9 @@ export const SongControl = () => {
     };
   }
 
-  function handleSkip() {}
+  function handleSkip() {
+    skipVideo();
+  }
 
   return (
     <>
@@ -65,7 +67,7 @@ export const SongControl = () => {
             >
               Skip
             </button>
-            <p>0/5</p>
+            <p>{skips}/5</p>
           </div>
 
           {/* Includes likes and count*/}

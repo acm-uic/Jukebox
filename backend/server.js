@@ -23,6 +23,9 @@ let storage = [];
 let currentVideo = null;
 let videoTimer = null;
 
+let skipCount = 0;
+const skipRequests = new Set();
+
 //middleware to parse json
 app.use(express.json());
 
@@ -32,6 +35,15 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+function updateStorage(videoId) {
+  const index = storage.findIndex((video) => video.id === videoId);
+
+  if (index != -1) {
+    storage[index].plays++;
+    storage[index].lastPlayed = new Date();
+  }
+}
 
 function startVideoTimer() {
   if (videoTimer) {
@@ -48,14 +60,24 @@ function startVideoTimer() {
 }
 
 function nextVideo() {
+  if (currentVideo) {
+    updateStorage(currentVideo.id);
+  }
+
   if (queue.length > 0) {
     console.log("Video ended, next video starting...");
+
     currentVideo = queue.shift();
     io.emit("currentVideoChanged", { currentVideo });
     io.emit("queueUpdated", { queue });
     startVideoTimer();
   } else {
     console.log("Video ended, no more videos in queue.");
+
+    if (videoTimer) {
+      clearInterval(videoTimer);
+    }
+
     currentVideo = null;
     io.emit("currentVideoChanged", { currentVideo });
   }
@@ -71,7 +93,7 @@ app.get("/songs/queue", (req, res) => {
 });
 
 app.get("/songs/current", (req, res) => {
-    return res.status(200).json(currentVideo);
+  return res.status(200).json(currentVideo);
 });
 
 //add song through url
@@ -118,6 +140,35 @@ app.post("/songs/url", async (req, res) => {
   return res.status(200).json(video);
 });
 
+io.on("connection", (socket) => {
+  io.emit("skipCountUpdated", { skipCount });
+
+  socket.on("skipRequest", () => {
+    if (currentVideo) {
+      console.log("Skip request received");
+
+      if (!skipRequests.has(socket.id)) {
+        console.log("Skip request added");
+        skipRequests.add(socket.id);
+        skipCount++;
+      }
+
+      if (skipCount >= 5) {
+        console.log("Skip count reached, skipping video");
+        skipCount = 0;
+        skipRequests.clear();
+        nextVideo();
+      }
+
+      io.emit("skipCountUpdated", { skipCount });
+    }
+    else {
+      console.log("No video to skip");
+    }
+  });
+});
+
+//Listen in PORT
 server.listen(process.env.PORT, () => {
   console.log(`Server is running at port ${process.env.PORT}`);
 });
