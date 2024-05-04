@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import StatVideoCard from "../components/StatsPageComponents/StatVideoCard";
 import StatsHeader from "../components/StatsPageComponents/StatsHeader";
+import { videoContext } from "../contexts/videoContext";
 
 export default function StatsPage() {
+  const { socket } = useContext(videoContext);
   const [storage, setStorage] = useState([]);
 
   useEffect(() => {
@@ -22,6 +24,15 @@ export default function StatsPage() {
     }
 
     fetchStorage();
+
+    socket.on("storageUpdated", ({ storage }) => {
+      console.log("Storage updated", storage);
+      setStorage(storage);
+    });
+
+    return () => {
+      socket.off("storageUpdated");
+    }
   }, []);
   //using plays as int, likes as int,
   const videoList = [
@@ -73,9 +84,9 @@ export default function StatsPage() {
           storage
             .sort((a, b) => {
               const timeA = Date.parse(a.lastPlayed);
-              const timeb = Date.parse(b.lastPlayed);
+              const timeB = Date.parse(b.lastPlayed);
 
-              return timeb - timeA;
+              return timeB - timeA;
             })
             .map((vid, index) => (
               <div

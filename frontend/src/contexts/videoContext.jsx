@@ -97,6 +97,7 @@ export function VideoContextProvider({ children }) {
   return (
     <videoContext.Provider
       value={{
+        socket,
         queue,
         addVideoToQueue,
         currentVideo,

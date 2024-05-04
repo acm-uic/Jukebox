@@ -42,6 +42,7 @@ function updateStorage(videoId) {
   if (index != -1) {
     storage[index].plays++;
     storage[index].lastPlayed = new Date();
+    io.emit("storageUpdated", { storage });
   }
 }
 
@@ -126,6 +127,7 @@ app.post("/songs/url", async (req, res) => {
       lastPlayed: new Date(0),
     };
     storage.push(video);
+    io.emit("storageUpdated", { storage });
   }
 
   if (currentVideo) {
