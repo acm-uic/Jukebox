@@ -10,6 +10,7 @@ export default function StatVideoCard({ video }) {
     .toISOString()
     .substring(14, 19);
 
+  const lastPlayedString = new Date(lastPlayed).toLocaleString();
   const [showUrl, setShowUrl] = useState(false);
 
   function handleClick() {
@@ -24,7 +25,7 @@ export default function StatVideoCard({ video }) {
           {title}
         </div>
         {lastPlayed && (
-          <div>Last Played: {lastPlayed.toLocaleString() || ""}</div>
+          <div>Last Played: {lastPlayedString || ""}</div>
         )}
         <div className="flex items-center">
           <button

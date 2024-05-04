@@ -3,13 +3,14 @@ import StatVideoCard from "../components/StatsPageComponents/StatVideoCard";
 import StatsHeader from "../components/StatsPageComponents/StatsHeader";
 
 export default function StatsPage() {
-  
-  const [storage, setStorage] = useState([]); 
+  const [storage, setStorage] = useState([]);
 
   useEffect(() => {
     //fetch storage
     async function fetchStorage() {
-      const response = await fetch(import.meta.env.VITE_APP_BACKEND_URL + "/songs/storage")
+      const response = await fetch(
+        import.meta.env.VITE_APP_BACKEND_URL + "/songs/storage"
+      );
       const storageData = await response.json();
 
       if (!response.ok) {
@@ -17,20 +18,19 @@ export default function StatsPage() {
         return;
       }
 
-      setStorage(storageData)
+      setStorage(storageData);
     }
 
     fetchStorage();
-
   }, []);
-  //using plays as int, likes as int, and recency as an int
+  //using plays as int, likes as int,
   const videoList = [
     {
       title: "5 second timer",
-      url:"https://youtu.be/GM_3IlttE-I?si=diSmC-rKBVyPCL4y",
+      url: "https://youtu.be/GM_3IlttE-I?si=diSmC-rKBVyPCL4y",
       duration: 5,
-      plays:0,
-      likes:0,
+      plays: 0,
+      likes: 0,
     },
     {
       title: "Do I Wanna Know?hbjhbiuhnuinuhijdklaskdlsadjlaks",
@@ -70,34 +70,45 @@ export default function StatsPage() {
       <StatsHeader currentTab={currentTab} setCurrentTab={setCurrentTab} />
       <div className="flex flex-col md:items-center md:gap-9 gap-2 relative w-full">
         {currentTab == 0 &&
-          storage.slice().reverse().map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-            </div>
-          ))}
+          storage
+            .sort((a, b) => {
+              const timeA = Date.parse(a.lastPlayed);
+              const timeb = Date.parse(b.lastPlayed);
+
+              return timeb - timeA;
+            })
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+              </div>
+            ))}
         {currentTab == 1 &&
-          storage.sort((a,b) =>  b.plays - a.plays).map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-              <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Plays: ${vid.plays}`}</div>
-            </div>
-          ))}
+          storage
+            .sort((a, b) => b.plays - a.plays)
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+                <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Plays: ${vid.plays}`}</div>
+              </div>
+            ))}
         {currentTab == 2 &&
-          storage.sort((a,b) =>  b.likes - a.likes).map((vid, index) => (
-            <div
-              key={index}
-              className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
-            >
-              <StatVideoCard video={vid} />
-              <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Likes: ${vid.likes}`}</div>
-            </div>
-          ))}
+          storage
+            .sort((a, b) => b.likes - a.likes)
+            .map((vid, index) => (
+              <div
+                key={index}
+                className="flex-col flex items-center xl:gap-9 gap-1 xl:relative max-w-[862px] md:w-full px-3"
+              >
+                <StatVideoCard video={vid} />
+                <div className="xl:absolute xl:text-2xl xl:-left-[26%] xl:top-9 text-xl font-extrabold">{`Likes: ${vid.likes}`}</div>
+              </div>
+            ))}
       </div>
     </div>
   );
