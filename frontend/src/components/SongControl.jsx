@@ -1,5 +1,5 @@
 import { videoContext } from "../contexts/videoContext";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { VideoPlayer } from "./VideoPlayer";
 
 export const SongControl = () => {
