@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
+//connects to the backend
 const socket = io(import.meta.env.VITE_APP_BACKEND_URL);
 
 export const videoContext = createContext();
@@ -47,6 +48,7 @@ export function VideoContextProvider({ children }) {
     fetchCurrentVideo();
     fetchQueue();
 
+    //Listen for events
     socket.on("queueUpdated", ({ queue }) => {
       console.log("Queue updated", queue);
       setQueue(queue);
@@ -63,6 +65,7 @@ export function VideoContextProvider({ children }) {
     });
 
     return () => {
+      //Cleanup
       socket.off("queueUpdated");
       socket.off("currentVideoChanged");
       socket.off("skipCountUpdated");
@@ -70,6 +73,7 @@ export function VideoContextProvider({ children }) {
 
   }, []);
 
+  //Add video to queue through POST request
   async function addVideoToQueue(url) {
     const response = await fetch(
       `${import.meta.env.VITE_APP_BACKEND_URL}/songs/url`,

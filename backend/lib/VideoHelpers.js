@@ -43,7 +43,7 @@ export async function getVideoDetails(videoId) {
       return null;
     }
   } catch (error) {
-    console.error("Error fetching video details:", error);
+    console.log("Error fetching video details:", error);
     return null;
   }
 }
