@@ -1,45 +1,28 @@
-import ReactPlayer from "react-player";
-import { videoContext } from "../domain/videoContext";
-import { useContext, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { videoContext } from "../contexts/videoContext";
+import { useContext, useState } from "react";
 import { VideoPlayer } from "./VideoPlayer";
 
 export const SongControl = () => {
   //Will add volume dial in future update
 
-  const video = {
-    id: 3,
-    url: "Youtube.com",
-    title: "No video",
-    duration: 0,
-    plays: 0,
-    likes: 0,
-    skips: 0,
-    skiplimit: 10,
-  };
-
- let {
-    current,
-    secondsPlayed,
-    nextVideo,
-  } = useContext(videoContext);
-
-  if (Object.keys(current).length == 0) {
-    current = video;
-  }
-
-  const { likes, skips, skiplimit, duration, title } = current;
+  let { playedSeconds, currentVideo, skips, skipVideo } = useContext(videoContext);
 
   const [minimal, setMinimal] = useState(true);
 
-  const durationString = new Date(duration * 1000)
-    .toISOString()
-    .substring(14, 19);
+  let durationString = "00:00";
+  if (currentVideo) {
+    durationString = new Date(currentVideo?.duration * 1000)
+      .toISOString()
+      .substring(14, 19);
+  } else {
+    currentVideo = {
+      title: "No video playing",
+      likes: 0,
+    };
+  }
 
   function handleSkip() {
-    if (current == video) return;
-    console.log("Skipping Song...");
-    nextVideo();
+    skipVideo();
   }
 
   return (
@@ -53,7 +36,7 @@ export const SongControl = () => {
       >
         {/* The Title */}
         <p className="block mr-2 md:max-w overflow-x-auto overflow-y-hidden no-scrollbar whitespace-nowrap">
-          Title: {title}
+          Title: {currentVideo?.title}
         </p>
 
         {/* Progress bar and time left */}
@@ -61,7 +44,9 @@ export const SongControl = () => {
           <div className="h-2 w-[800px] bg-slate-300">
             <div
               className="h-full bg-red-600"
-              style={{ width: `${(secondsPlayed / current.duration) * 100}%` }}
+              style={{
+                width: `${(playedSeconds / currentVideo?.duration) * 100}%`,
+              }}
             />
           </div>
           <p className="text-lg">{durationString}</p>
@@ -77,14 +62,12 @@ export const SongControl = () => {
             }
           >
             <button
-              onClick={() => handleSkip()}
+              onClick={handleSkip}
               className="bg-neutral-600 w-36 h-10 rounded-l text-white"
             >
               Skip
             </button>
-            <p>
-              {skips}/{skiplimit}
-            </p>
+            <p>{skips}/5</p>
           </div>
 
           {/* Includes likes and count*/}
@@ -96,7 +79,7 @@ export const SongControl = () => {
             }
           >
             <img className="size-8 md:size-12" src="src/images/Like0.png" />
-            <p className="flex">{likes}</p>
+            <p className="flex">{currentVideo?.likes}</p>
           </div>
         </div>
       </div>

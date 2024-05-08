@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { videoContext } from "../domain/videoContext";
+import { videoContext } from "../contexts/videoContext";
 export default function Home() {
-  let { queue, current, showVideo } = useContext(videoContext);
+  const { queue, currentVideo, showing } = useContext(videoContext);
   //    console.log(current)
 
   const videoStyle = {
-    display: showVideo ? "block" : "none",
+    display: showing ? "block" : "none",
   };
 
   return (
@@ -25,9 +25,9 @@ export default function Home() {
       <section className="w-full px-2">
         <div className="w-full h-full max-w-[752px] mx-auto space-y-2">
           <h1 className="text-3xl">Now Playing:</h1>
-          {current && (
+          {currentVideo && (
             <div className="w-full h-20 bg-red-600 rounded-lg">
-              {current.title}
+              {currentVideo?.title}
             </div>
           )}
         </div>
@@ -37,7 +37,7 @@ export default function Home() {
           <h1 className="text-3xl">Coming Up:</h1>
           {queue.length === 0 ? (
             <div className="w-full h-20 bg-red-600 text-center rounded-lg">
-              No video has been added
+              No video in queue
             </div>
           ) : (
             queue.map((video, index) => (

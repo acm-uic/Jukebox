@@ -1,7 +1,10 @@
-# Jukebox
+# ACM@UIC Jukebox
 
+## Running the Jukebox locally
 
-List of contributors:
-Adrian Knight - [@Ajknight121](https://github.com/Ajknight121)
-Owen Neal - [@owenneal](https://github.com/owenneal)
-Andre Rimes - [@AndreRimes](https://github.com/AndreRimes)
+1. run ~npm install~ in frontend and backend directory
+2. The backend env needs a youtube apikey and a port to host on
+2. The client env file needs the url of the backend with the port provided to the server: ~http://localhost:(server-port)~
+2. run ~npm run dev~ on a terminal in the frontend and backend directory
+3. The backend directory run a node server that keeps a socket connection to clients
+4. The frontend is the Jukebox website made in react
