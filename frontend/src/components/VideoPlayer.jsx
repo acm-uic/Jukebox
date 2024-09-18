@@ -1,37 +1,45 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { videoContext } from "../domain/videoContext";
 import { useLocation } from "react-router-dom";
+import { videoContext } from "../contexts/videoContext";
+
 export const VideoPlayer = () => {
   const location = useLocation();
   // Highly informed by this w3schools tutorial:
   // https://www.w3schools.com/react/react_forms.asp
-  let {
-    addQueueUrl,
+
+  const {
+    addVideoToQueue,
+    currentVideo,
+    showing,
+    setShowing,
     playing,
     setPlaying,
-    setSecondsPlayed,
-    current,
-    nextVideo,
-    showVideo,
-    setShowVideo,
+    setPlayedSeconds,
   } = useContext(videoContext);
 
   const [inputUrl, setInputUrl] = useState("");
   const playerRef = useRef();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const success = await addQueueUrl(inputUrl);
+  useEffect(() => {
+    if (currentVideo && playerRef.current) {
+      playerRef.current.seekTo(0);
+    }
+  }, [currentVideo]);
+
+  //handles submitting url to queue
+  const handleSubmit = async () => {
+    addVideoToQueue(inputUrl);
     setInputUrl("");
   };
 
+  //handles viewing the player
   const toggleVideo = () => {
-    setShowVideo((prev) => !prev);
+    setShowing((prev) => !prev);
   };
 
   const videoStyle = {
-    display: showVideo ? "block" : "none",
+    display: showing ? "block" : "none",
   };
 
   return (
@@ -51,19 +59,18 @@ export const VideoPlayer = () => {
             ref={playerRef}
             height={"100%"}
             width={"100%"}
-            url={current.url}
+            url={currentVideo?.url}
             playing={playing}
             controls
             progressInterval={100}
             onPause={() => setPlaying(false)}
             onPlay={() => setPlaying(true)}
-            onProgress={({ playedSeconds }) => setSecondsPlayed(playedSeconds)}
-            onEnded={() => nextVideo()}
+            onProgress={({ playedSeconds }) => setPlayedSeconds(playedSeconds)}
           />
         </div>
       </div>
       <div className="flex p-2 gap-4 w-full max-w-[768px] mx-auto">
-        <form id="addToQueue" className="text-white flex-grow m-auto" onSubmit={handleSubmit}>
+        <div className="text-white flex-grow m-auto" onSubmit={handleSubmit}>
           <label className="text-sm md:text-lg">
             Enter a video URL:
             <input
@@ -74,15 +81,18 @@ export const VideoPlayer = () => {
               onChange={(e) => setInputUrl(e.target.value)}
             />
           </label>
-        </form>
+        </div>
         <div className="flex flex-col gap-1">
           <button
             className="w-40 mx-auto text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
             onClick={toggleVideo}
           >
-            {showVideo ? "Switch to Audio" : "Switch to Video"}
+            {showing ? "Switch to Audio" : "Switch to Video"}
           </button>
-          <button className="w-40 mx-auto text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-400 font-medium rounded-full text-sm px-5 py-2.5 text-center" type="submit" form="addToQueue">
+          <button
+            onClick={handleSubmit}
+            className="w-40 mx-auto text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-400 font-medium rounded-full text-sm px-5 py-2.5 text-center"
+          >
             Add to Queue
           </button>
         </div>
