@@ -34,9 +34,9 @@ export const Header = () => {
           ACM@UIC JUKEBOX
         </h1>
         <div className=" flex flex-row-reverse items-center h-full lg:w-1/4">
-          <button className="h-1/2 aspect-square">
+          {/* <button className="h-1/2 aspect-square">
             <img src="src/images/ProfilePic.png" />
-          </button>
+          </button> */}
         </div>
       </nav>
       <MenuDropdown showMenu={showMenu} setShowMenu={setShowMenu} />
