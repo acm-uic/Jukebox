@@ -54,7 +54,7 @@ export const VideoPlayer = () => {
         style={videoStyle}
         className="max-h-[415px] aspect-video bg-neutral-900"
       >
-        <div className="h-full aspect-video bg-black mx-auto">
+        <div className="h-full w-full aspect-video bg-black mx-auto">
           <ReactPlayer
             ref={playerRef}
             height={"100%"}
