@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
-    "build-frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend",
+    "build-frontend": "npm install && npm install --prefix ../frontend && npm run build --prefix ../frontend",
     "build-serve": "npm install && npm run build --prefix ../frontend && node server.js",
-    "serve": "node server.js"
+    "serve": "npm install && node server.js"
   },
   "keywords": [],
   "author": "",
