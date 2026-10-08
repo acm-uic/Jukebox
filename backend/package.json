@@ -5,7 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build-frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend",
+    "build-serve": "npm install && npm run build --prefix ../frontend && node server.js",
+    "serve": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mongoose": "^8.5.3",
     "nodemon": "^3.1.0",
     "socket.io": "^4.7.5"
   }
