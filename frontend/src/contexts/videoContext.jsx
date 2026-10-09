@@ -48,6 +48,10 @@ export function VideoContextProvider({ children }) {
     fetchCurrentVideo();
     fetchQueue();
 
+    const queueInterval = setInterval(() => { // Keeps traffic going to server to prevent render spindown
+      fetchQueue();
+    }, 10 * 60 * 1000);
+
     //Listen for events
     socket.on("queueUpdated", ({ queue }) => {
       console.log("Queue updated", queue);
@@ -65,6 +69,7 @@ export function VideoContextProvider({ children }) {
     });
 
     return () => {
+      clearInterval(queueInterval);
       //Cleanup
       socket.off("queueUpdated");
       socket.off("currentVideoChanged");
